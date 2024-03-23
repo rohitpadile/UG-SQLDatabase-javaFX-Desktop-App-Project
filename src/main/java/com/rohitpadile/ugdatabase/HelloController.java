@@ -22,6 +22,8 @@ public class HelloController {
     @FXML
     private PasswordField adminPasswordField;
     @FXML
+    private PasswordField userPasswordField;
+    @FXML
     public void switchToAdminPassword(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("admin-password.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -41,18 +43,29 @@ public class HelloController {
     public void enterPasswordForAdmin(ActionEvent event) throws IOException {
         String pass = adminPasswordField.getText().trim();
         if(pass.equals(passwords.getCurrentAdminPassword())) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-profile.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("admin-profile.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(loader.load());
+            scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } else {
             adminPasswordField.clear();
         }
-
     }
 
-
+    @FXML
+    public void enterPasswordForUser(ActionEvent event) throws IOException {
+        String pass = userPasswordField.getText().trim();
+        if(pass.equals(passwords.getCurrentUserPassword())) {
+            Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            userPasswordField.clear();
+        }
+    }
 
 
 }
