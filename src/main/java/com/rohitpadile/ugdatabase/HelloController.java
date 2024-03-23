@@ -6,9 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +15,7 @@ public class HelloController {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private static Profile profile;
 
     private Passwords passwords = new Passwords();
     @FXML
@@ -48,6 +47,9 @@ public class HelloController {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            profile = new Profile();
+
         } else {
             adminPasswordField.clear();
         }
@@ -62,6 +64,8 @@ public class HelloController {
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            profile = new Profile();
         } else {
             userPasswordField.clear();
         }
