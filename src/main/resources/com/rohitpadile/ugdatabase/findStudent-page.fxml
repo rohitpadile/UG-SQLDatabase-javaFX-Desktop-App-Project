@@ -43,7 +43,11 @@
                   <Font name="Candara Light" size="50.0" />
                </font>
             </Label>
-            <TextField fx:id="findStudentMisField" layoutX="467.0" layoutY="279.0" onAction="#findStudentMisInputHandle" prefHeight="66.0" prefWidth="346.0" />
+            <TextField fx:id="findStudentMisField" layoutX="467.0" layoutY="279.0" onAction="#findStudentMisInputHandle" prefHeight="66.0" prefWidth="346.0" promptText="612211066">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </TextField>
             </children>
         </AnchorPane>
     </children>
