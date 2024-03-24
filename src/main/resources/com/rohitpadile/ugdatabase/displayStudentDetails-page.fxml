@@ -32,26 +32,27 @@
                           <Font size="96.0" />
                       </font>
                   </Label>
-            <Button layoutX="667.0" layoutY="242.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="312.0" text="Edit Student" textFill="#2b72e4">
+            <Button fx:id="editStudentButton" layoutX="667.0" layoutY="343.0" mnemonicParsing="false" onAction="#editStudent" prefHeight="78.0" prefWidth="312.0" text="Edit Student" textFill="#2b72e4">
                <font>
                   <Font name="Bookshelf Symbol 7" size="37.0" />
                </font>
             </Button>
-            <Button layoutX="320.0" layoutY="343.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="312.0" text="Add Student" textFill="#2b72e4">
+            <Button fx:id="addStudentProfile" layoutX="320.0" layoutY="243.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="78.0" prefWidth="312.0" text="Add Student" textFill="#2b72e4">
                <font>
                   <Font name="Bookshelf Symbol 7" size="37.0" />
                </font>
             </Button>
-            <Button layoutX="321.0" layoutY="242.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="312.0" text="Delete Student" textFill="#2b72e4">
+            <Button fx:id="deleteStudentButton" layoutX="320.0" layoutY="343.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="78.0" prefWidth="312.0" text="Delete Student" textFill="#2b72e4">
                <font>
                   <Font name="Bookshelf Symbol 7" size="37.0" />
                </font>
             </Button>
-            <Button layoutX="666.0" layoutY="343.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="312.0" text="Find Student" textFill="#2b72e4">
+            <Button fx:id="findStudentButton" layoutX="667.0" layoutY="243.0" mnemonicParsing="false" onAction="#findStudent" prefHeight="78.0" prefWidth="312.0" text="Find Student" textFill="#2b72e4">
                <font>
                   <Font name="Bookshelf Symbol 7" size="37.0" />
                </font>
             </Button>
+            <Label layoutX="684.0" layoutY="145.0" prefHeight="18.0" prefWidth="166.0" text="student details" />
             </children>
         </AnchorPane>
     </children>

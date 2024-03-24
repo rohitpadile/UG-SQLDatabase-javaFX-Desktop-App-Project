@@ -15,13 +15,15 @@ public class HelloController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private static Profile profile;
+    private static ProfileController profileController;
 
     private Passwords passwords = new Passwords();
     @FXML
     private PasswordField adminPasswordField;
     @FXML
     private PasswordField userPasswordField;
+    @FXML
+    private PasswordField findStudentMisField;
     @FXML
     public void switchToAdminPassword(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("admin-password.fxml"));
@@ -48,7 +50,7 @@ public class HelloController {
             stage.setScene(scene);
             stage.show();
 
-            profile = new Profile();
+            profileController = new ProfileController();
 
         } else {
             adminPasswordField.clear();
@@ -59,17 +61,18 @@ public class HelloController {
     public void enterPasswordForUser(ActionEvent event) throws IOException {
         String pass = userPasswordField.getText().trim();
         if(pass.equals(passwords.getCurrentUserPassword())) {
-            Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("user-profileController.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
-            profile = new Profile();
+            profileController = new ProfileController();
         } else {
             userPasswordField.clear();
         }
     }
+
 
 
 }
