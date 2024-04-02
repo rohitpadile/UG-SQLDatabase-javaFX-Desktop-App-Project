@@ -51,6 +51,7 @@ public class HelloController {
             stage.show();
 
             profileController = new ProfileController();
+            //Initializing Profle
 
         } else {
             adminPasswordField.clear();
@@ -68,6 +69,7 @@ public class HelloController {
             stage.show();
 
             profileController = new ProfileController();
+            //Initializing Profle
         } else {
             userPasswordField.clear();
         }

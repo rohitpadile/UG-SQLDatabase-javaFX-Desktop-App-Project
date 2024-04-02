@@ -6,9 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
@@ -31,14 +30,34 @@ public class ProfileController {
     @FXML
     private TextField findStudentMisField;
 
+//    @FXML
+//    private Label misDisplayLabel = new Label();
+//    @FXML
+//    private Label nameDisplayLabel = new Label();
+//    @FXML
+//    private Label yoaDisplayLabel = new Label();
+//    @FXML
+//    private Label emailDisplayLabel = new Label();
+//    @FXML
+//    private Label phoneDisplayLabel = new Label();
+//    @FXML
+//    private Label addressDisplayLabel = new Label();
+
+    @FXML
+    private TextArea displayStudentDetailsTextArea = new TextArea();
+    //Initialize Field outside of the methods only.
+
     private Stage stage;
     private Scene scene;
     private Parent root;
+    public String entered_mis;
+
+
     private static final Map<String, Student> dataMap = new HashMap<>();
 
     static  {
         // Load the Data as soon as the ProfileController is opened
-        // Load the data from the csv file into the hashmap 'data'
+        // Load the data from the csv file into the hashmap 'dataMap'
 
         try {
             loadCSVData("UGData/ugstudentdata.csv");
@@ -48,8 +67,6 @@ public class ProfileController {
         } finally {
             System.out.println("Finally block is Run successfully");
         }
-
-
     }
 
     public static void loadCSVData(String filename) throws IOException {
@@ -136,29 +153,53 @@ public class ProfileController {
             }
         } catch (IOException | ClassCastException e){
             findStudentMisField.clear();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Invalid Mis");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Mis");
+
+            alert.showAndWait();
+            return;
         }
+        entered_mis = findStudentMisField.getText().trim();
 
+        if (dataMap.containsKey(entered_mis)) {
+//                root = FXMLLoader.load(getClass().getResource("displayStudentDetails-page.fxml"));
+//                stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+//                scene = new Scene(root);
+//                stage.setScene(scene);
+//                stage.show();
+//            System.out.println("MIS is present in the dataMap");
+//
+//            System.out.println(entered_mis);
+//            System.out.println(dataMap);
 
-        //Checking the MIS in the dataMap
-        try {
-            if (dataMap.containsKey(findStudentMisField.getText().trim())) {
-                root = FXMLLoader.load(getClass().getResource("displayStudentDetails-page.fxml"));
-                stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } else {
-                //open a dialog which says student not found.
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Invalid Mis");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid Mis");
-
-                alert.showAndWait();
+            try {
+                displayStudentDetailsTextArea.setText("" +
+                        "MIS: \t\t\t\t\t" + dataMap.get(entered_mis).getMis() + "\n" +
+                        "NAME: \t\t\t\t" + dataMap.get(entered_mis).getFirstName() + " " +
+                        dataMap.get(entered_mis).getMiddleName() + " " +
+                        dataMap.get(entered_mis).getLastName() + "\n" +
+                        "YEAR OF ADMISSION: \t" + dataMap.get(entered_mis).getYearOfAdmission() + "\n" +
+                        "EMAIL: \t\t\t\t" + dataMap.get(entered_mis).getEmail() + "\n" +
+                        "PHONE: \t\t\t\t" + dataMap.get(entered_mis).getMobileNumber() + "\n" +
+                        "ADDRESS: \t\t\t" + dataMap.get(entered_mis).getHomeAddress() + "\n");
+            } catch (NullPointerException e) {
+                System.out.println("Null pointer exception");
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
+        } else {
+            //open a Alert dialog which says student not found.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("MIS NOT FOUND!");
+            alert.setHeaderText(null);
+            alert.setContentText("Student with Mis " + findStudentMisField.getText().trim() + " not found!");
+
+            alert.showAndWait();
         }
+
     }
+
 }
