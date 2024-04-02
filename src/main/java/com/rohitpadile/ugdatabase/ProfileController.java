@@ -10,23 +10,23 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class ProfileController {
-    @FXML
-    private Button findStudentButton;
+//    @FXML
+//    private Button findStudentButton;
     @FXML
     private Button addStudentButton;
     @FXML
     private Button editStudentButton;
     @FXML
     private Button deleteStudentButton;
+    @FXML
+    private Button deleteStudentButtonConfirm = new Button();
     @FXML
     private TextField findStudentMisField;
 
@@ -51,6 +51,7 @@ public class ProfileController {
     private Scene scene;
     private Parent root;
     public String entered_mis;
+    //This is public entered_mis entered in MIS FIELD of Find Student and Delete Student Method
 
 
     private static final Map<String, Student> dataMap = new HashMap<>();
@@ -97,6 +98,30 @@ public class ProfileController {
         System.out.println("loadCSVData is successful");
         System.out.println(dataMap);
     }
+
+    public static void loadMapData(String filename, Map<String,Student> dataMap) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+
+        for(Map.Entry<String, Student> entry : dataMap.entrySet()) {
+
+            Student student = entry.getValue();
+            String line = student.getMis() + "," +
+                    student.getFirstName() + "," +
+                    student.getMiddleName() + "," +
+                    student.getLastName() + "," +
+                    student.getYearOfAdmission() + "," +
+                    student.getEmail() + "," +
+                    student.getMobileNumber() + "," +
+                    student.getHomeAddress();
+
+            writer.write(line);
+            writer.newLine();
+        }
+        writer.close();
+        System.out.println("CSV file updated Successfully");
+
+    }
+
     @FXML
     public void addStudent(ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("addStudent-page.fxml"));
@@ -201,5 +226,37 @@ public class ProfileController {
         }
 
     }
+
+
+    @FXML
+    public void deleteStudentButtonHandle(ActionEvent event) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("DELETE STUDENT DATA?");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to confirm delete Student with MIS: " + entered_mis);
+
+//        alert.showAndWait();
+        ButtonType confirmButton = new ButtonType("Confirm");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
+        alert.getButtonTypes().setAll(confirmButton, cancelButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.isPresent() && result.get() == confirmButton) {
+            System.out.println("Deleting Student....");
+            dataMap.remove(entered_mis);
+            try {
+                loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file
+            } catch (IOException e) {
+                System.out.println("Cannot update CSV FILE");
+            } finally {
+                System.out.println("Finally block is run successfully");
+            }
+        } else  {
+            System.out.println("Canceling Deletion");
+        }
+
+    }
+
 
 }
