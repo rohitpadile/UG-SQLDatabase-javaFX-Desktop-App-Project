@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -29,6 +28,8 @@ public class ProfileController {
     private Button deleteStudentButtonConfirm = new Button();
     @FXML
     private TextField findStudentMisField;
+    @FXML
+    private TextField addStudentMisField;
 
 //    @FXML
 //    private Label misDisplayLabel = new Label();
@@ -50,7 +51,8 @@ public class ProfileController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    public String entered_mis;
+    public String entered_mis_ForFindStudent;
+    public String entered_mis_ForAddStudent;
     //This is public entered_mis entered in MIS FIELD of Find Student and Delete Student Method
 
 
@@ -95,7 +97,7 @@ public class ProfileController {
             dataMap.put(fields[0], student);
         }
 
-        System.out.println("loadCSVData is successful");
+        System.out.println("loadCSVData is successful. dataMap is updated successfully");
         System.out.println(dataMap);
     }
 
@@ -165,14 +167,15 @@ public class ProfileController {
 
         //Verifying if the MIS is valid
         try {
-            String pattern = "^6122\\d{5}$";
+            String pattern1 = "^6122\\d{5}$";
+            String pattern2 = "^6423\\d{5}$";
 //            if(Integer.parseInt(findStudentMisField.getText().trim())); //Checking if the entered mis is Integer
 //            int checkMis;
 
 //            String checkMis_ = String.valueOf(checkMis);
             String checkMis_ = findStudentMisField.getText().trim();
-            if(checkMis_.length() == 9 && checkMis_.matches(pattern)) {
-                System.out.println("Enter MIS is valid and of the form 612211066");
+            if(checkMis_.length() == 9 && (checkMis_.matches(pattern1) || checkMis_.matches(pattern2))) {
+                System.out.println("Find Student Method: Enter MIS is valid and of the form 612211066 or 642311066");
             } else {
                 throw new IOException();
             }
@@ -186,9 +189,9 @@ public class ProfileController {
             alert.showAndWait();
             return;
         }
-        entered_mis = findStudentMisField.getText().trim();
+        entered_mis_ForFindStudent = findStudentMisField.getText().trim();
 
-        if (dataMap.containsKey(entered_mis)) {
+        if (dataMap.containsKey(entered_mis_ForFindStudent)) {
 //                root = FXMLLoader.load(getClass().getResource("displayStudentDetails-page.fxml"));
 //                stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
 //                scene = new Scene(root);
@@ -201,14 +204,14 @@ public class ProfileController {
 
             try {
                 displayStudentDetailsTextArea.setText("" +
-                        "MIS: \t\t\t\t\t" + dataMap.get(entered_mis).getMis() + "\n" +
-                        "NAME: \t\t\t\t" + dataMap.get(entered_mis).getFirstName() + " " +
-                        dataMap.get(entered_mis).getMiddleName() + " " +
-                        dataMap.get(entered_mis).getLastName() + "\n" +
-                        "YEAR OF ADMISSION: \t" + dataMap.get(entered_mis).getYearOfAdmission() + "\n" +
-                        "EMAIL: \t\t\t\t" + dataMap.get(entered_mis).getEmail() + "\n" +
-                        "PHONE: \t\t\t\t" + dataMap.get(entered_mis).getMobileNumber() + "\n" +
-                        "ADDRESS: \t\t\t" + dataMap.get(entered_mis).getHomeAddress() + "\n");
+                        "MIS: \t\t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMis() + "\n" +
+                        "NAME: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getFirstName() + " " +
+                        dataMap.get(entered_mis_ForFindStudent).getMiddleName() + " " +
+                        dataMap.get(entered_mis_ForFindStudent).getLastName() + "\n" +
+                        "YEAR OF ADMISSION: \t" + dataMap.get(entered_mis_ForFindStudent).getYearOfAdmission() + "\n" +
+                        "EMAIL: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getEmail() + "\n" +
+                        "PHONE: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMobileNumber() + "\n" +
+                        "ADDRESS: \t\t\t" + dataMap.get(entered_mis_ForFindStudent).getHomeAddress() + "\n");
             } catch (NullPointerException e) {
                 System.out.println("Null pointer exception");
             }
@@ -233,20 +236,20 @@ public class ProfileController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("DELETE STUDENT DATA?");
         alert.setHeaderText(null);
-        alert.setContentText("Do you want to confirm delete Student with MIS: " + entered_mis);
+        alert.setContentText("Do you want to confirm delete Student with MIS: " + entered_mis_ForFindStudent);
 
-//        alert.showAndWait();
         ButtonType confirmButton = new ButtonType("Confirm");
         ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(confirmButton, cancelButton);
 
         Optional<ButtonType> result = alert.showAndWait();
+        //We usually deal with button in Alert dialog. Trend hai bhai!
 
         if(result.isPresent() && result.get() == confirmButton) {
             System.out.println("Deleting Student....");
-            dataMap.remove(entered_mis);
+            dataMap.remove(entered_mis_ForFindStudent); //Removed Student from dataMap
             try {
-                loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file
+                loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
             } catch (IOException e) {
                 System.out.println("Cannot update CSV FILE");
             } finally {
@@ -254,6 +257,54 @@ public class ProfileController {
             }
         } else  {
             System.out.println("Canceling Deletion");
+        }
+
+    }
+
+    @FXML
+    public void addStudentMisInputHandle(ActionEvent event) throws IOException {
+        //Verifying if the MIS is valid
+        try {
+            String pattern1 = "^6122\\d{5}$";
+            String pattern2 = "^6423\\d{5}$";
+//            if(Integer.parseInt(findStudentMisField.getText().trim())); //Checking if the entered mis is Integer
+//            int checkMis;
+
+//            String checkMis_ = String.valueOf(checkMis);
+            String checkMis_ = addStudentMisField.getText().trim();
+            if(checkMis_.length() == 9 && (checkMis_.matches(pattern1) || checkMis_.matches(pattern2))) {
+                System.out.println("Add Student Method: Enter MIS is valid and of the form 612211066 or 642311066");
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException | ClassCastException e){
+            addStudentMisField.clear();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Invalid Mis");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Mis");
+
+            alert.showAndWait();
+            return;
+        }
+        entered_mis_ForAddStudent = addStudentMisField.getText().trim();
+
+        if (dataMap.containsKey(entered_mis_ForAddStudent)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("MIS ALREADY PRESENT");
+            alert.setHeaderText(null);
+            alert.setContentText("Student with MIS + " + entered_mis_ForAddStudent + " already present in the Database!");
+
+            alert.showAndWait();
+        } else {
+            //Redirect the page to a new Page to get the Validated Data Input
+//            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
+            root = FXMLLoader.load(getClass().getResource("findStudent-page.fxml"));
+            stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
         }
 
     }
