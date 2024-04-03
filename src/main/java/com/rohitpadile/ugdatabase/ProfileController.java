@@ -51,12 +51,32 @@ public class ProfileController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    public String entered_mis_ForFindStudent;
-    public String entered_mis_ForAddStudent;
+    private String entered_mis_ForFindStudent;
     //This is public entered_mis entered in MIS FIELD of Find Student and Delete Student Method
+    public static String entered_mis_ForAddStudent;
 
 
-    private static final Map<String, Student> dataMap = new HashMap<>();
+
+
+    @FXML
+    private Button addStudentInputDetailsSaveButton = new Button();
+    @FXML
+    private TextField addStudentFirstNameField = new TextField();
+    @FXML
+    private TextField addStudentLastNameField = new TextField();
+    @FXML
+    private TextField addStudentMiddleNameField = new TextField();
+    @FXML
+    private TextField addStudentYOAField = new TextField();
+    @FXML
+    private TextField addStudentEmailAddressField = new TextField();
+    @FXML
+    private TextField addStudentMobileNumberField = new TextField();
+    @FXML
+    private TextField addStudentHomeAddressField = new TextField();
+
+
+    protected static final Map<String, Student> dataMap = new HashMap<>();
 
     static  {
         // Load the Data as soon as the ProfileController is opened
@@ -189,6 +209,8 @@ public class ProfileController {
             alert.showAndWait();
             return;
         }
+
+        //entered_mis_ForFindStudent from admin
         entered_mis_ForFindStudent = findStudentMisField.getText().trim();
 
         if (dataMap.containsKey(entered_mis_ForFindStudent)) {
@@ -287,7 +309,9 @@ public class ProfileController {
             alert.showAndWait();
             return;
         }
-        entered_mis_ForAddStudent = addStudentMisField.getText().trim();
+
+        //entered_mis_ForFindStudent from admin
+        this.entered_mis_ForAddStudent = addStudentMisField.getText().trim();
 
         if (dataMap.containsKey(entered_mis_ForAddStudent)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -298,13 +322,171 @@ public class ProfileController {
             alert.showAndWait();
         } else {
             //Redirect the page to a new Page to get the Validated Data Input
-//            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
-            root = FXMLLoader.load(getClass().getResource("findStudent-page.fxml"));
+            System.out.println("Mis entered for adding is: " +  entered_mis_ForAddStudent);
+            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
+//            root = FXMLLoader.load(getClass().getResource("addStudent-page.fxml"));
+//            root = FXMLLoader.load(getClass().getResource("findStudent-page.fxml"));
             stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
+            //Hovering off to AddStudentInputDetailsController
+
+//            AddStudentInputDetailsController addStudentInputDetailsController = new AddStudentInputDetailsController(entered_mis_ForAddStudent);
+        }
+
+    }
+
+
+    @FXML
+    public void addStudentInputDetailsSaveButtonHandle(ActionEvent event) throws IOException {
+        System.out.println("Mis entered for adding is: " +  this.entered_mis_ForAddStudent);
+         try {
+            if (addStudentFirstNameField.getText().trim().matches("[a-zA-Z]+") &&
+                    addStudentMiddleNameField.getText().trim().matches("[a-zA-Z]+") &&
+                    addStudentLastNameField.getText().trim().matches("[a-zA-Z]+")) {
+                System.out.println("Name is valid");
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException e) {
+
+            System.out.println("Invalid Input");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INVALID NAME INPUT");
+            alert.setHeaderText(null);
+            alert.setContentText("Please check First,Middle,Last Name.");
+
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            if (addStudentYOAField.getText().trim().length() == 4 && addStudentYOAField.getText().trim().matches("[0-9]+")) {
+                System.out.println("The year of admission is valid.");
+            } else {
+                throw new IOException();
+            }
+
+        }catch (IOException e) {
+//            System.out.println();
+            System.out.println("Invalid Year of Admission");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INVALID YEAR OF ADMISSION");
+            alert.setHeaderText(null);
+            alert.setContentText("Please check Year of Admission");
+
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            String emailPattern = "[a-zA-Z0-9._%+-]+@coeptech\\.ac\\.in";
+            if (addStudentEmailAddressField.getText().trim().matches(emailPattern)) {
+                System.out.println("The email address is valid.");
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException e) {
+            System.out.println("Invalid email address.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INVALID EMAIL ADDRESS");
+            alert.setHeaderText(null);
+            alert.setContentText("Please check your email address");
+
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            if (addStudentMobileNumberField.getText().trim().length() == 10 &&
+                    addStudentMobileNumberField.getText().trim().matches("[0-9]+")) {
+                System.out.println("The mobile number is valid.");
+            } else {
+                throw new IOException();
+            }
+
+        }catch (IOException e) {
+            System.out.println("Invalid mobile number.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INVALID MOBILE NUMBER");
+            alert.setHeaderText(null);
+            alert.setContentText("Please check your mobile address");
+
+            alert.showAndWait();
+            return;
+        }
+
+
+        try {
+            if (addStudentHomeAddressField.getText().trim().length() >= 5) {
+                System.out.println("Valid address");
+            } else {
+                throw new IOException();
+            }
+
+        }catch (IOException e) {
+            System.out.println("Very short address");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("VERY SHORT ADDRESS");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter address for minimum 5 characters");
+
+            alert.showAndWait();
+            return;
+        }
+
+
+        try {
+            String firstName = addStudentFirstNameField.getText().trim();
+            String middleName = addStudentMiddleNameField.getText().trim();
+            String lastName = addStudentLastNameField.getText().trim();
+            String yearOfAdmission = addStudentYOAField.getText().trim();
+            String emailAddress = addStudentEmailAddressField.getText().trim();
+            String mobileNumber = addStudentMobileNumberField.getText().trim();
+            String homeAddress = addStudentHomeAddressField.getText().trim();
+
+            // Perform null checks on text fields
+            if (firstName.isEmpty() || lastName.isEmpty() || yearOfAdmission.isEmpty() || emailAddress.isEmpty() ||
+                    mobileNumber.isEmpty() || homeAddress.isEmpty()) {
+                throw new NullPointerException("One or more fields are empty.");
+            }
+
+            // Proceed with creating the student object and adding it to the map
+            Student student = new Student(
+                    this.entered_mis_ForAddStudent,
+                    firstName,
+                    middleName,
+                    lastName,
+                    yearOfAdmission,
+                    emailAddress,
+                    mobileNumber,
+                    homeAddress);
+            System.out.println("New student to Add is successfully created");
+            dataMap.put(entered_mis_ForAddStudent, student);
+            System.out.println("New student to Add is successfully put in dataMap");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Successful");
+            alert.setHeaderText(null);
+            alert.setContentText("NEW STUDENT WITH MIS " + entered_mis_ForAddStudent + " ADDED SUCCESSFULLY");
+
+            alert.showAndWait();
+
+            loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+            System.out.println("Updated the csv file!");
+
+        } catch (NullPointerException e) {
+            System.out.println("New student to Add is unsuccessful: " + e.getMessage());
+            // Optionally show an alert or message to the user indicating that one or more fields are empty
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("UNSUCCESSFUL");
+            alert.setHeaderText(null);
+
+            alert.showAndWait();
+//            alert.setContentText("Please enter address for minimum 5 characters");
         }
 
     }

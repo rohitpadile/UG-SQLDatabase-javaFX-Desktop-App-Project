@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloController {
+    private String deleteThisLater;
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -51,7 +52,7 @@ public class HelloController {
             stage.show();
 
             profileController = new ProfileController();
-            //Initializing Profle
+            //Initializing Profile
 
         } else {
             adminPasswordField.clear();
@@ -69,7 +70,7 @@ public class HelloController {
             stage.show();
 
             profileController = new ProfileController();
-            //Initializing Profle
+            //Initializing Profile
         } else {
             userPasswordField.clear();
         }

@@ -9,9 +9,14 @@ public class Student {
     private String email;
     private String mobileNumber;
     private String homeAddress;
+    private String regularMisPattern = "^6122\\d{5}$";
+    private String dsyMisPattern = "^6423\\d{5}$";
+    private String type;
 
     public Student(String mis, String first, String middle, String last, String yoa, String email, String mobileNumber, String homeAddress) {
         this.mis = mis;
+        if(mis.matches(regularMisPattern)) type = "regular";
+        else if(mis.matches(dsyMisPattern)) type = "dsy";
         this.firstName = first;
         this.middleName = middle;
         this.lastName = last;
@@ -19,6 +24,7 @@ public class Student {
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.homeAddress = homeAddress;
+
     }
 
     public String getFirstName() {
@@ -85,7 +91,15 @@ public class Student {
         homeAddress = newHomeAddress;
     }
 
-//    public void printDetails() {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    //    public void printDetails() {
 //        System.out.println("Name: " + firstName + " " + middleName + " " + lastName);
 //        System.out.println("MIS: " + mis);
 //        System.out.println("Year of Admission: " + yearOfAdmission);
@@ -94,7 +108,6 @@ public class Student {
 //        System.out.println("Home Address: " + homeAddress);
 //        System.out.println("----------------------");
 //    }
-
 
     @Override
     public String toString() {
@@ -107,6 +120,9 @@ public class Student {
                 ", email='" + email + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", homeAddress='" + homeAddress + '\'' +
+                ", regularMisPattern='" + regularMisPattern + '\'' +
+                ", dsyMisPattern='" + dsyMisPattern + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
