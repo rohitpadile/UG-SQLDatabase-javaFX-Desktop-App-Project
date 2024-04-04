@@ -43,14 +43,14 @@
                         <Font name="Cambria" size="32.0" />
                     </font>
                 </Label>
-                <TextField fx:id="editStudentFirstNameField" layoutX="398.0" layoutY="230.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="14.0" prefWidth="225.0">
+                <TextField fx:id="editStudentFirstNameField" layoutX="398.0" layoutY="237.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="14.0" prefWidth="225.0">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="23.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="editStudentMiddleNameField" layoutX="398.0" layoutY="308.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="26.0" prefWidth="226.0">
+                <TextField fx:id="editStudentMiddleNameField" layoutX="398.0" layoutY="311.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="26.0" prefWidth="226.0">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="23.0" />
                     </font>
                 </TextField>
                 <Label layoutX="94.0" layoutY="298.0" prefHeight="78.0" prefWidth="286.0" text="Middle Name" textFill="#5711d9">
@@ -63,14 +63,14 @@
                         <Font name="Cambria" size="32.0" />
                     </font>
                 </Label>
-                <TextField fx:id="editStudentLastNameField" layoutX="400.0" layoutY="382.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="14.0" prefWidth="225.0">
+                <TextField fx:id="editStudentLastNameField" layoutX="400.0" layoutY="389.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="14.0" prefWidth="225.0">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="23.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="editStudentYOAField" layoutX="400.0" layoutY="460.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="26.0" prefWidth="226.0">
+                <TextField fx:id="editStudentYOAField" layoutX="400.0" layoutY="464.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="26.0" prefWidth="226.0">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="23.0" />
                     </font>
                 </TextField>
                 <Label layoutX="96.0" layoutY="450.0" prefHeight="78.0" prefWidth="286.0" text="Year of admission" textFill="#5711d9">
@@ -83,14 +83,14 @@
                         <Font name="Cambria" size="32.0" />
                     </font>
                 </Label>
-                <TextField fx:id="editStudentEmailAddressField" layoutX="953.0" layoutY="230.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="14.0" prefWidth="225.0">
+                <TextField fx:id="editStudentEmailAddressField" layoutX="953.0" layoutY="250.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="14.0" prefWidth="225.0">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="15.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="editStudentMobileNumberField" layoutX="953.0" layoutY="308.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="26.0" prefWidth="226.0">
+                <TextField fx:id="editStudentMobileNumberField" layoutX="953.0" layoutY="309.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="26.0" prefWidth="226.0">
                     <font>
-                        <Font size="28.0" />
+                        <Font size="23.0" />
                     </font>
                 </TextField>
                 <Label layoutX="649.0" layoutY="298.0" prefHeight="78.0" prefWidth="286.0" text="Mobile Number" textFill="#5711d9">
@@ -105,7 +105,7 @@
                 </Label>
                 <TextField fx:id="editStudentHomeAddressField" alignment="TOP_LEFT" layoutX="955.0" layoutY="382.0" onAction="#editStudentInputDetailsSaveButtonHandle" prefHeight="142.0" prefWidth="226.0">
                     <font>
-                        <Font size="13.0" />
+                        <Font size="20.0" />
                     </font>
                 </TextField>
             <Button fx:id="editStudentInputDetailsBackButton" layoutX="92.0" layoutY="535.0" mnemonicParsing="false" onAction="#editStudentInputDetailsBackButtonHandle" prefHeight="54.0" prefWidth="124.0" text="Back" textFill="BLUEVIOLET">
