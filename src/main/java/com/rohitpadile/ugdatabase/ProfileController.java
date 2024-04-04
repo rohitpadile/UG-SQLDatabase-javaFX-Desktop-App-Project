@@ -127,7 +127,7 @@ public class ProfileController extends HelloController {
 
 
         try {
-            loadCSVData("UGData/ugstudentdata.csv");
+            loadCSVData("./ugstudentdata.csv");
         } catch (IOException e) {
             System.out.println("Problem in static initializer block of ProfileController (filename)");
             throw new RuntimeException(e);
@@ -323,7 +323,7 @@ public class ProfileController extends HelloController {
             System.out.println("Deleting Student....");
             dataMap.remove(entered_mis_ForFindStudent); //Removed Student from dataMap
             try {
-                loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+                loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
             } catch (IOException e) {
                 System.out.println("Cannot update CSV FILE");
             } finally {
@@ -369,7 +369,7 @@ public class ProfileController extends HelloController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("MIS ALREADY PRESENT");
             alert.setHeaderText(null);
-            alert.setContentText("Student with MIS + " + entered_mis_ForAddStudent + " already present in the Database!");
+            alert.setContentText("Student with MIS: " + entered_mis_ForAddStudent + " already present in the Database!");
 
             alert.showAndWait();
         } else {
@@ -526,7 +526,7 @@ public class ProfileController extends HelloController {
 
             alert.showAndWait();
 
-            loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
             System.out.println("Updated the csv file!");
 
         } catch (NullPointerException e) {
@@ -771,7 +771,7 @@ public class ProfileController extends HelloController {
         }
 
         try {
-            loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
 
             System.out.println("Student Details Edited Successfully");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
