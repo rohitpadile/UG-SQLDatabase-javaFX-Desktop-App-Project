@@ -114,11 +114,17 @@ public class ProfileController extends HelloController {
     private Button userProfileBackButton = new Button();
 
     protected static final Map<String, Student> dataMap = new HashMap<>();
+//    @FXML
+//    public static TextField currentProfileTextField = new TextField(); //used in static initializer block
+
 
     static  {
         // Load the Data as soon as the ProfileController is opened
         // Load the data from the csv file into the hashmap 'dataMap'
         System.out.println("current profile is " + currentLoggedInProfileName);
+//        currentProfileTextField.setEditable(false);
+//        currentProfileTextField.setText(currentLoggedInProfileName);
+
 
         try {
             loadCSVData("UGData/ugstudentdata.csv");
@@ -128,6 +134,10 @@ public class ProfileController extends HelloController {
         } finally {
             System.out.println("Finally block is Run successfully");
         }
+    }
+
+    public ProfileController() {
+        System.out.println("ProfileController constructor is called");
     }
 
     public static void loadCSVData(String filename) throws IOException {
