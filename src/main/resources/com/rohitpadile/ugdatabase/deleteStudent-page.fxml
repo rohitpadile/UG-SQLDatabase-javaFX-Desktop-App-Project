@@ -49,7 +49,7 @@
                   <Font size="28.0" />
                </font>
             </TextField>
-            <TextArea fx:id="displayStudentDetailsTextArea" editable="false" layoutX="652.0" layoutY="251.0" prefHeight="342.0" prefWidth="614.0" promptText="STUDENT DETAILS:">
+            <TextArea fx:id="displayStudentDetailsTextArea" editable="false" layoutX="652.0" layoutY="251.0" prefHeight="326.0" prefWidth="614.0" promptText="STUDENT DETAILS:">
                <font>
                   <Font size="21.0" />
                </font>
@@ -64,6 +64,11 @@
                   <Font name="Arial Bold" size="32.0" />
                </font>
             </Button>
+            <Label layoutX="947.0" layoutY="584.0" prefHeight="26.0" prefWidth="314.0" text="Made with love by Rohit Padile" textFill="BLUEVIOLET">
+               <font>
+                  <Font name="Ink Free" size="22.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>
