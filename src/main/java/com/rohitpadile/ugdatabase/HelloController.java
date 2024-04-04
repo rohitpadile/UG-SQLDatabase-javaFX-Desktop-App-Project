@@ -6,12 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class HelloController {
+
+    public static String currentLoggedInProfileName;
     private String deleteThisLater;
     private Stage stage;
     private Scene scene;
@@ -23,8 +26,7 @@ public class HelloController {
     private PasswordField adminPasswordField;
     @FXML
     private PasswordField userPasswordField;
-    @FXML
-    private PasswordField findStudentMisField;
+
     @FXML
     public void switchToAdminPassword(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("admin-password.fxml"));
@@ -45,6 +47,7 @@ public class HelloController {
     public void enterPasswordForAdmin(ActionEvent event) throws IOException {
         String pass = adminPasswordField.getText().trim();
         if(pass.equals(passwords.getCurrentAdminPassword())) {
+            currentLoggedInProfileName = "Admin";
             Parent root = FXMLLoader.load(getClass().getResource("admin-profile.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -63,6 +66,7 @@ public class HelloController {
     public void enterPasswordForUser(ActionEvent event) throws IOException {
         String pass = userPasswordField.getText().trim();
         if(pass.equals(passwords.getCurrentUserPassword())) {
+            currentLoggedInProfileName = "User";
             Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -75,6 +79,7 @@ public class HelloController {
             userPasswordField.clear();
         }
     }
+
 
 
 

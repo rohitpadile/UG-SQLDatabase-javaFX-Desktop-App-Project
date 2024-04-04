@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class ProfileController {
-//    @FXML
-//    private Button findStudentButton;
+public class ProfileController extends HelloController {
+
+
     @FXML
     private Button addStudentButton;
     @FXML
@@ -53,7 +53,7 @@ public class ProfileController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private String entered_mis_ForFindStudent;
+    private static String entered_mis_ForFindStudent;
     //This is public entered_mis entered in MIS FIELD of Find Student and Delete Student Method
     private static String entered_mis_ForAddStudent;
     private static String entered_mis_ForEditStudent;
@@ -96,12 +96,29 @@ public class ProfileController {
     @FXML
     private TextField editStudentHomeAddressField = new TextField();
 
+    //BACK BUTTONS:-
+
+    @FXML
+    private Button addStudentBackButton = new Button();
+    @FXML
+    private Button deleteStudentBackButton = new Button();
+    @FXML
+    private Button editStudentBackButton = new Button();
+    @FXML
+    private Button findStudentBackButton = new Button();
+    @FXML
+    private Button editStudentInputDetailsBackButton = new Button();
+    @FXML
+    private Button addStudentInputDetailsBackButton = new Button();
+    @FXML
+    private Button userProfileBackButton = new Button();
 
     protected static final Map<String, Student> dataMap = new HashMap<>();
 
     static  {
         // Load the Data as soon as the ProfileController is opened
         // Load the data from the csv file into the hashmap 'dataMap'
+        System.out.println("current profile is " + currentLoggedInProfileName);
 
         try {
             loadCSVData("UGData/ugstudentdata.csv");
@@ -167,6 +184,7 @@ public class ProfileController {
 
     @FXML
     public void addStudent(ActionEvent event) throws IOException{
+        System.out.println("current profile is " + currentLoggedInProfileName);
         root = FXMLLoader.load(getClass().getResource("addStudent-page.fxml"));
         stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);
@@ -177,6 +195,7 @@ public class ProfileController {
     }
     @FXML
     public void findStudent(ActionEvent event) throws IOException {
+        System.out.println("current profile is " + currentLoggedInProfileName);
         root = FXMLLoader.load(getClass().getResource("findStudent-page.fxml"));
         stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);
@@ -186,6 +205,7 @@ public class ProfileController {
     }
     @FXML
     public void editStudent(ActionEvent event) throws IOException{
+        System.out.println("current profile is " + currentLoggedInProfileName);
         root = FXMLLoader.load(getClass().getResource("editStudent-page.fxml"));
         stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);
@@ -195,6 +215,7 @@ public class ProfileController {
     }
     @FXML
     public void deleteStudent(ActionEvent event) throws IOException{
+        System.out.println("current profile is " + currentLoggedInProfileName);
         root = FXMLLoader.load(getClass().getResource("deleteStudent-page.fxml"));
         stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         scene = new Scene(root);
@@ -755,8 +776,116 @@ public class ProfileController {
         } finally {
             System.out.println("Finally block is run successfully");
         }
+    }
 
+
+    @FXML
+    public void userProfileLogoutButtonHandle(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    } //working fine
+
+    @FXML
+    public void adminProfileLogoutButtonHandle(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    } //working fine
+
+    @FXML
+    public void findStudentBackButtonHandle(ActionEvent event) throws IOException {
+        try {
+            if (currentLoggedInProfileName.equals("Admin")) {
+                Parent root = FXMLLoader.load(getClass().getResource("admin-profile.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } else if (currentLoggedInProfileName.equals("User")) {
+                Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+            System.out.println("current profile is " + currentLoggedInProfileName);
+        }
+    }
+
+    @FXML
+    public void editStudentBackButtonHandle(ActionEvent event) throws IOException {
+        if(currentLoggedInProfileName.equals("Admin")) {
+            Parent root = FXMLLoader.load(getClass().getResource("admin-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else if (currentLoggedInProfileName.equals("User")) {
+            Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
+    @FXML
+    public void editStudentInputDetailsBackButtonHandle(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("editStudent-page.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void addStudentBackButtonHandle(ActionEvent event) throws IOException {
+        if(currentLoggedInProfileName.equals("Admin")) {
+            Parent root = FXMLLoader.load(getClass().getResource("admin-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else if (currentLoggedInProfileName.equals("User")) {
+            Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
 
     }
 
+    @FXML
+    public void addStudentInputDetailsBackButtonHandle(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("addStudent-page.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void deleteStudentBackButtonHandle(ActionEvent event) throws IOException {
+        if(currentLoggedInProfileName.equals("Admin")) {
+            Parent root = FXMLLoader.load(getClass().getResource("admin-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } else if (currentLoggedInProfileName.equals("User")) {
+            Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
 }

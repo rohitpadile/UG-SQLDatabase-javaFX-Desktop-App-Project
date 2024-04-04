@@ -59,6 +59,11 @@
                   <Font name="Bookshelf Symbol 7" size="20.0" />
                </font>
             </Button>
+            <Button fx:id="deleteStudentBackButton" layoutX="92.0" layoutY="483.0" mnemonicParsing="false" onAction="#deleteStudentBackButtonHandle" prefHeight="54.0" prefWidth="124.0" text="Back" textFill="BLUEVIOLET">
+               <font>
+                  <Font name="Arial Bold" size="32.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>

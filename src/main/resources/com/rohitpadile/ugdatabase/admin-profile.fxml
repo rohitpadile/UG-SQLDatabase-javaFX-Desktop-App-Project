@@ -52,6 +52,11 @@
                   <Font name="Bookshelf Symbol 7" size="37.0" />
                </font>
             </Button>
+            <Button fx:id="adminProfileLogoutButton" layoutX="92.0" layoutY="483.0" mnemonicParsing="false" onAction="#adminProfileLogoutButtonHandle" prefHeight="58.0" prefWidth="248.0" text="Logout" textFill="BLUEVIOLET">
+               <font>
+                  <Font name="Arial Bold" size="32.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </children>
