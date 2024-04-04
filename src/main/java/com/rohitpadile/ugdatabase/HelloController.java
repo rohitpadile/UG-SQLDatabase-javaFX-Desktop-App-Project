@@ -63,7 +63,7 @@ public class HelloController {
     public void enterPasswordForUser(ActionEvent event) throws IOException {
         String pass = userPasswordField.getText().trim();
         if(pass.equals(passwords.getCurrentUserPassword())) {
-            Parent root = FXMLLoader.load(getClass().getResource("user-profileController.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("user-profile.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

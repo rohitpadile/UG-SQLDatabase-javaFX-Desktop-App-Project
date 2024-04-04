@@ -30,6 +30,8 @@ public class ProfileController {
     private TextField findStudentMisField;
     @FXML
     private TextField addStudentMisField;
+    @FXML
+    private TextField editStudentMisField;
 
 //    @FXML
 //    private Label misDisplayLabel = new Label();
@@ -53,13 +55,17 @@ public class ProfileController {
     private Parent root;
     private String entered_mis_ForFindStudent;
     //This is public entered_mis entered in MIS FIELD of Find Student and Delete Student Method
-    public static String entered_mis_ForAddStudent;
+    private static String entered_mis_ForAddStudent;
+    private static String entered_mis_ForEditStudent;
 
 
 
 
     @FXML
     private Button addStudentInputDetailsSaveButton = new Button();
+    @FXML
+    private Button editStudentInputDetailsSaveButton = new Button();
+
     @FXML
     private TextField addStudentFirstNameField = new TextField();
     @FXML
@@ -74,6 +80,21 @@ public class ProfileController {
     private TextField addStudentMobileNumberField = new TextField();
     @FXML
     private TextField addStudentHomeAddressField = new TextField();
+
+    @FXML
+    private TextField editStudentFirstNameField = new TextField();
+    @FXML
+    private TextField editStudentLastNameField = new TextField();
+    @FXML
+    private TextField editStudentMiddleNameField = new TextField();
+    @FXML
+    private TextField editStudentYOAField = new TextField();
+    @FXML
+    private TextField editStudentEmailAddressField = new TextField();
+    @FXML
+    private TextField editStudentMobileNumberField = new TextField();
+    @FXML
+    private TextField editStudentHomeAddressField = new TextField();
 
 
     protected static final Map<String, Student> dataMap = new HashMap<>();
@@ -488,8 +509,254 @@ public class ProfileController {
             alert.showAndWait();
 //            alert.setContentText("Please enter address for minimum 5 characters");
         }
+    }
+
+
+
+
+
+    @FXML
+    public void editStudentMisInputHandle(ActionEvent event) throws IOException {
+        //Verifying if the MIS is valid
+        try {
+            String pattern1 = "^6122\\d{5}$";
+            String pattern2 = "^6423\\d{5}$";
+//            if(Integer.parseInt(findStudentMisField.getText().trim())); //Checking if the entered mis is Integer
+//            int checkMis;
+
+//            String checkMis_ = String.valueOf(checkMis);
+            String checkMis_ = editStudentMisField.getText().trim();
+            if(checkMis_.length() == 9 && (checkMis_.matches(pattern1) || checkMis_.matches(pattern2))) {
+                System.out.println("Add Student Method: Enter MIS is valid and of the form 612211066 or 642311066");
+            } else {
+                throw new IOException();
+            }
+        } catch (IOException | ClassCastException e){
+            editStudentMisField.clear();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Invalid Mis");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Mis");
+
+            alert.showAndWait();
+            return;
+        }
+
+        //entered_mis_ForFindStudent from admin
+        this.entered_mis_ForEditStudent = editStudentMisField.getText().trim();
+
+        if (dataMap.containsKey(entered_mis_ForEditStudent)) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("EDIT STUDENT DATA?");
+            alert.setHeaderText(null);
+            alert.setContentText("Do you want edit Student details with Mis: " + entered_mis_ForEditStudent);
+
+            ButtonType confirmButton = new ButtonType("Confirm");
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
+            alert.getButtonTypes().setAll(confirmButton, cancelButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            //We usually deal with button in Alert dialog. Trend hai bhai!
+
+            if(result.isPresent() && result.get() == confirmButton) {
+                System.out.println("Editing Student process....");
+                //Redirect to editStudentInputDetails-page.fxml
+
+                root = FXMLLoader.load(getClass().getResource("editStudentInputDetails-page.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } else  {
+                System.out.println("Canceling Editing of Student with Mis: " + entered_mis_ForEditStudent);
+                return;
+            }
+        } else {
+            //open a Alert dialog which says student not found.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("MIS NOT FOUND!");
+            alert.setHeaderText(null);
+            alert.setContentText("Student with Mis " + entered_mis_ForEditStudent + " not found!");
+
+            alert.showAndWait();
+        }
 
     }
 
+    @FXML
+    public void editStudentInputDetailsSaveButtonHandle(ActionEvent event) throws IOException {
+        String firstName = editStudentFirstNameField.getText().trim();
+        String lastName = editStudentLastNameField.getText().trim();
+        String middleName = editStudentMiddleNameField.getText().trim();
+        String yearOfAdmission = editStudentYOAField.getText().trim();
+        String emailAddress = editStudentEmailAddressField.getText().trim();
+        String mobileNumber = editStudentMobileNumberField.getText().trim();
+        String homeAddress = editStudentHomeAddressField.getText().trim();
+
+        Student student = dataMap.get(entered_mis_ForEditStudent);
+
+        if (!firstName.isBlank()) {
+            try {
+                if (editStudentFirstNameField.getText().trim().matches("[a-zA-Z]+")) {
+                    System.out.println("First Name is valid");
+                    student.setFirstName(firstName);
+                } else {
+                    throw new IOException();
+                }
+            } catch (IOException e) {
+
+                System.out.println("Invalid Input");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INVALID FIRST NAME");
+                alert.setHeaderText(null);
+                alert.setContentText("Please check First Name.");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+        if (!middleName.isBlank()) {
+            try {
+                if (editStudentMiddleNameField.getText().trim().matches("[a-zA-Z]+")) {
+                    System.out.println("Middle Name is valid");
+                    student.setMiddleName(firstName);
+                } else {
+                    throw new IOException();
+                }
+            } catch (IOException e) {
+
+                System.out.println("Invalid Input");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INVALID MIDDLE NAME");
+                alert.setHeaderText(null);
+                alert.setContentText("Please check Middle Name.");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+
+        if (!lastName.isBlank()) {
+            try {
+                if (editStudentLastNameField.getText().trim().matches("[a-zA-Z]+")) {
+                    System.out.println("Last Name is valid");
+                    student.setLastName(firstName);
+                } else {
+                    throw new IOException();
+                }
+            } catch (IOException e) {
+
+                System.out.println("Invalid Input");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INVALID LAST NAME");
+                alert.setHeaderText(null);
+                alert.setContentText("Please check Last Name.");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+        if (!yearOfAdmission.isBlank()) {
+            try {
+                if (editStudentYOAField.getText().trim().length() == 4 && editStudentYOAField.getText().trim().matches("[0-9]+")) {
+                    System.out.println("The year of admission is valid.");
+                    student.setYearOfAdmission(yearOfAdmission);
+                } else {
+                    throw new IOException();
+                }
+
+            }catch (IOException e) {
+//            System.out.println();
+                System.out.println("Invalid Year of Admission");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INVALID YEAR OF ADMISSION");
+                alert.setHeaderText(null);
+                alert.setContentText("Please check Year of Admission");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+        if (!emailAddress.isBlank()) {
+            try {
+                String emailPattern = "[a-zA-Z0-9._%+-]+@coeptech\\.ac\\.in";
+                if (editStudentEmailAddressField.getText().trim().matches(emailPattern)) {
+                    System.out.println("The email address is valid.");
+                    student.setEmail(emailAddress);
+                } else {
+                    throw new IOException();
+                }
+            } catch (IOException e) {
+                System.out.println("Invalid email address.");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INVALID EMAIL ADDRESS");
+                alert.setHeaderText(null);
+                alert.setContentText("Please check your email address");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+        if (!mobileNumber.isBlank()) {
+            try {
+                if (editStudentMobileNumberField.getText().trim().length() == 10 &&
+                        editStudentMobileNumberField.getText().trim().matches("[0-9]+")) {
+                    System.out.println("The mobile number is valid.");
+                    student.setMobileNumber(mobileNumber);
+                } else {
+                    throw new IOException();
+                }
+
+            }catch (IOException e) {
+                System.out.println("Invalid mobile number.");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INVALID MOBILE NUMBER");
+                alert.setHeaderText(null);
+                alert.setContentText("Please check your mobile address");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+        if (!homeAddress.isBlank()) {
+            try {
+                if (editStudentHomeAddressField.getText().trim().length() >= 5) {
+                    System.out.println("Valid address");
+                    student.setHomeAddress(homeAddress);
+                } else {
+                    throw new IOException();
+                }
+
+            }catch (IOException e) {
+                System.out.println("Very short address");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("VERY SHORT ADDRESS");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter address for minimum 5 characters");
+
+                alert.showAndWait();
+                return;
+            }
+        }
+
+        try {
+            loadMapData("UGData/ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+
+            System.out.println("Student Details Edited Successfully");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Student Details Edited Successfully");
+            alert.setHeaderText(null);
+            alert.setContentText("Student Details For Mis " + entered_mis_ForEditStudent + " Updated Successfully");
+
+            alert.showAndWait();
+            return;
+        } catch (IOException e) {
+            System.out.println("Cannot update CSV FILE");
+        } finally {
+            System.out.println("Finally block is run successfully");
+        }
+
+
+    }
 
 }

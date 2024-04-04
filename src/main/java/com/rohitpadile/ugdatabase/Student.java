@@ -91,6 +91,7 @@ public class Student {
         homeAddress = newHomeAddress;
     }
 
+
     public String getType() {
         return type;
     }
@@ -125,6 +126,7 @@ public class Student {
                 ", type='" + type + '\'' +
                 '}';
     }
+
 }
 
 
