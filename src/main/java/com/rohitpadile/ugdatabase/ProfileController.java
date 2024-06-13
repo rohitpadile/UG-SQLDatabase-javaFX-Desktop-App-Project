@@ -113,77 +113,77 @@ public class ProfileController extends HelloController {
     @FXML
     private Button userProfileBackButton = new Button();
 
-    protected static final Map<String, Student> dataMap = new HashMap<>();
-    static  {
-        // Load the Data as soon as the ProfileController is opened
-        // Load the data from the csv file into the hashmap 'dataMap'
-        System.out.println("current profile is " + currentLoggedInProfileName);
-
-        try {
-            loadCSVData("./ugstudentdata.csv");
-        } catch (IOException e) {
-            System.out.println("Problem in static initializer block of ProfileController (filename)");
-            throw new RuntimeException(e);
-        } finally {
-            System.out.println("Finally block is Run successfully");
-        }
-    }
+    protected static final Map<String, Student> dataMap = new HashMap<>(); //Comment this later out
+//    static  {
+//        // Load the Data as soon as the ProfileController is opened
+//        // Load the data from the csv file into the hashmap 'dataMap'
+//        System.out.println("current profile is " + currentLoggedInProfileName);
+//
+//        try {
+//            loadCSVData("./ugstudentdata.csv");
+//        } catch (IOException e) {
+//            System.out.println("Problem in static initializer block of ProfileController (filename)");
+//            throw new RuntimeException(e);
+//        } finally {
+//            System.out.println("Finally block is Run successfully");
+//        }
+//    }
 
     public ProfileController() {
         System.out.println("ProfileController constructor is called");
     }
 
-    public static void loadCSVData(String filename) throws IOException {
-        File file = new File(filename);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] fields = line.split(",");
-
-            Student student = new Student(
-                    fields[0], // MIS
-                    fields[1], // First Name
-                    fields[2], // Middle Name
-                    fields[3], // Last Name
-                    fields[4], // Year of Admission
-                    fields[5], // Email
-                    fields[6], // Mobile Number
-                    fields[7]  // Home Address
-            );
-
-            dataMap.put(fields[0], student);
-        }
-
-        System.out.println("loadCSVData is successful. dataMap is updated successfully");
-        System.out.println(dataMap);
-    }
-
-    public static void loadMapData(String filename, Map<String,Student> dataMap) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-
-        for(Map.Entry<String, Student> entry : dataMap.entrySet()) {
-
-            Student student = entry.getValue();
-            String line = student.getMis() + "," +
-                    student.getFirstName() + "," +
-                    student.getMiddleName() + "," +
-                    student.getLastName() + "," +
-                    student.getYearOfAdmission() + "," +
-                    student.getEmail() + "," +
-                    student.getMobileNumber() + "," +
-                    student.getHomeAddress();
-
-            writer.write(line);
-            writer.newLine();
-        }
-        writer.close();
-        System.out.println("CSV file updated Successfully");
-
-    }
+//    public static void loadCSVData(String filename) throws IOException {
+//        File file = new File(filename);
+//        if (!file.exists()) {
+//            file.createNewFile();
+//        }
+//
+//        BufferedReader reader = new BufferedReader(new FileReader(filename));
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            String[] fields = line.split(",");
+//
+//            Student student = new Student(
+//                    fields[0], // MIS
+//                    fields[1], // First Name
+//                    fields[2], // Middle Name
+//                    fields[3], // Last Name
+//                    fields[4], // Year of Admission
+//                    fields[5], // Email
+//                    fields[6], // Mobile Number
+//                    fields[7]  // Home Address
+//            );
+//
+//            dataMap.put(fields[0], student);
+//        }
+//
+//        System.out.println("loadCSVData is successful. dataMap is updated successfully");
+//        System.out.println(dataMap);
+//    }
+//
+//    public static void loadMapData(String filename, Map<String,Student> dataMap) throws IOException {
+//        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+//
+//        for(Map.Entry<String, Student> entry : dataMap.entrySet()) {
+//
+//            Student student = entry.getValue();
+//            String line = student.getMis() + "," +
+//                    student.getFirstName() + "," +
+//                    student.getMiddleName() + "," +
+//                    student.getLastName() + "," +
+//                    student.getYearOfAdmission() + "," +
+//                    student.getEmail() + "," +
+//                    student.getMobileNumber() + "," +
+//                    student.getHomeAddress();
+//
+//            writer.write(line);
+//            writer.newLine();
+//        }
+//        writer.close();
+//        System.out.println("CSV file updated Successfully");
+//
+//    }
 
     @FXML
     public void addStudent(ActionEvent event) throws IOException{
@@ -256,22 +256,22 @@ public class ProfileController extends HelloController {
         entered_mis_ForFindStudent = findStudentMisField.getText().trim();
 
         if (dataMap.containsKey(entered_mis_ForFindStudent)) {
+//
+//            try {
+//                displayStudentDetailsTextArea.setText("" +
+//                        "MIS: \t\t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMis() + "\n" +
+//                        "NAME: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getFirstName() + " " +
+//                        dataMap.get(entered_mis_ForFindStudent).getMiddleName() + " " +
+//                        dataMap.get(entered_mis_ForFindStudent).getLastName() + "\n" +
+//                        "YEAR OF ADMISSION: \t" + dataMap.get(entered_mis_ForFindStudent).getYearOfAdmission() + "\n" +
+//                        "EMAIL: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getEmail() + "\n" +
+//                        "PHONE: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMobileNumber() + "\n" +
+//                        "ADDRESS: \t\t\t" + dataMap.get(entered_mis_ForFindStudent).getHomeAddress() + "\n");
+//            } catch (NullPointerException e) {
+//                System.out.println("Null pointer exception");
+//            }
 
-            try {
-                displayStudentDetailsTextArea.setText("" +
-                        "MIS: \t\t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMis() + "\n" +
-                        "NAME: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getFirstName() + " " +
-                        dataMap.get(entered_mis_ForFindStudent).getMiddleName() + " " +
-                        dataMap.get(entered_mis_ForFindStudent).getLastName() + "\n" +
-                        "YEAR OF ADMISSION: \t" + dataMap.get(entered_mis_ForFindStudent).getYearOfAdmission() + "\n" +
-                        "EMAIL: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getEmail() + "\n" +
-                        "PHONE: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMobileNumber() + "\n" +
-                        "ADDRESS: \t\t\t" + dataMap.get(entered_mis_ForFindStudent).getHomeAddress() + "\n");
-            } catch (NullPointerException e) {
-                System.out.println("Null pointer exception");
-            }
-
-
+//WRITE THE ABOVE EQUIVALENT CODE FOR DATABASE
 
         } else {
             //open a Alert dialog which says student not found.
@@ -301,15 +301,17 @@ public class ProfileController extends HelloController {
         //We usually deal with button in Alert dialog. Trend hai bhai!
 
         if(result.isPresent() && result.get() == confirmButton) {
-            System.out.println("Deleting Student....");
-            dataMap.remove(entered_mis_ForFindStudent); //Removed Student from dataMap
-            try {
-                loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
-            } catch (IOException e) {
-                System.out.println("Cannot update CSV FILE");
-            } finally {
-                System.out.println("Finally block is run successfully");
-            }
+//            System.out.println("Deleting Student....");
+//            dataMap.remove(entered_mis_ForFindStudent); //Removed Student from dataMap
+//            try {
+//                loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+//            } catch (IOException e) {
+//                System.out.println("Cannot update CSV FILE");
+//            } finally {
+//                System.out.println("Finally block is run successfully");
+//            }
+
+//            WRITE EQUIVALENT CODE FOR DATABASE
         } else  {
             System.out.println("Canceling Deletion");
         }
@@ -343,23 +345,24 @@ public class ProfileController extends HelloController {
         //entered_mis_ForFindStudent from admin
         this.entered_mis_ForAddStudent = addStudentMisField.getText().trim();
 
-        if (dataMap.containsKey(entered_mis_ForAddStudent)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("MIS ALREADY PRESENT");
-            alert.setHeaderText(null);
-            alert.setContentText("Student with MIS: " + entered_mis_ForAddStudent + " already present in the Database!");
+//        if (dataMap.containsKey(entered_mis_ForAddStudent)) {
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("MIS ALREADY PRESENT");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Student with MIS: " + entered_mis_ForAddStudent + " already present in the Database!");
+//
+//            alert.showAndWait();
+//        } else {
+//            //Redirect the page to a new Page to get the Validated Data Input
+//            System.out.println("Mis entered for adding is: " +  entered_mis_ForAddStudent);
+//            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
+//            stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+//            scene = new Scene(root);
+//            stage.setScene(scene);
+//            stage.show();
+//        }
 
-            alert.showAndWait();
-        } else {
-            //Redirect the page to a new Page to get the Validated Data Input
-            System.out.println("Mis entered for adding is: " +  entered_mis_ForAddStudent);
-            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
-            stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-
-        }
+//        WRITE EQUIVALENT CODE FOR DATABASE
 
     }
 
@@ -489,17 +492,23 @@ public class ProfileController extends HelloController {
                     homeAddress);
             System.out.println("New student to Add is successfully created");
             dataMap.put(entered_mis_ForAddStudent, student);
-            System.out.println("New student to Add is successfully put in dataMap");
+//            System.out.println("New student to Add is successfully put in dataMap");
+//
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Successful");
+//            alert.setHeaderText(null);
+//            alert.setContentText("NEW STUDENT WITH MIS " + entered_mis_ForAddStudent + " ADDED SUCCESSFULLY");
+//
+//            alert.showAndWait();
+//
+//            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+//            System.out.println("Updated the csv file!");
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Successful");
-            alert.setHeaderText(null);
-            alert.setContentText("NEW STUDENT WITH MIS " + entered_mis_ForAddStudent + " ADDED SUCCESSFULLY");
 
-            alert.showAndWait();
 
-            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
-            System.out.println("Updated the csv file!");
+//            WRITE EQUIVALENT CODE FOR DATABASE
+
+
 
         } catch (NullPointerException e) {
             System.out.println("New student to Add is unsuccessful: " + e.getMessage());
@@ -510,7 +519,6 @@ public class ProfileController extends HelloController {
             alert.setHeaderText(null);
 
             alert.showAndWait();
-//            alert.setContentText("Please enter address for minimum 5 characters");
         }
     }
 
@@ -545,41 +553,45 @@ public class ProfileController extends HelloController {
         //entered_mis_ForFindStudent from admin
         this.entered_mis_ForEditStudent = editStudentMisField.getText().trim();
 
-        if (dataMap.containsKey(entered_mis_ForEditStudent)) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("EDIT STUDENT DATA?");
-            alert.setHeaderText(null);
-            alert.setContentText("Do you want edit Student details with Mis: " + entered_mis_ForEditStudent);
+//        if (dataMap.containsKey(entered_mis_ForEditStudent)) {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setTitle("EDIT STUDENT DATA?");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Do you want edit Student details with Mis: " + entered_mis_ForEditStudent);
+//
+//            ButtonType confirmButton = new ButtonType("Confirm");
+//            ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
+//            alert.getButtonTypes().setAll(confirmButton, cancelButton);
+//
+//            Optional<ButtonType> result = alert.showAndWait();
+//            //We usually deal with button in Alert dialog. Trend hai bhai!
+//
+//            if(result.isPresent() && result.get() == confirmButton) {
+//                System.out.println("Editing Student process....");
+//                //Redirect to editStudentInputDetails-page.fxml
+//
+//                root = FXMLLoader.load(getClass().getResource("editStudentInputDetails-page.fxml"));
+//                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//                scene = new Scene(root);
+//                stage.setScene(scene);
+//                stage.show();
+//            } else  {
+//                System.out.println("Canceling Editing of Student with Mis: " + entered_mis_ForEditStudent);
+//                return;
+//            }
+//        } else {
+//            //open a Alert dialog which says student not found.
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("MIS NOT FOUND!");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Student with Mis " + entered_mis_ForEditStudent + " not found!");
+//
+//            alert.showAndWait();
+//        }
 
-            ButtonType confirmButton = new ButtonType("Confirm");
-            ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
-            alert.getButtonTypes().setAll(confirmButton, cancelButton);
 
-            Optional<ButtonType> result = alert.showAndWait();
-            //We usually deal with button in Alert dialog. Trend hai bhai!
 
-            if(result.isPresent() && result.get() == confirmButton) {
-                System.out.println("Editing Student process....");
-                //Redirect to editStudentInputDetails-page.fxml
-
-                root = FXMLLoader.load(getClass().getResource("editStudentInputDetails-page.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } else  {
-                System.out.println("Canceling Editing of Student with Mis: " + entered_mis_ForEditStudent);
-                return;
-            }
-        } else {
-            //open a Alert dialog which says student not found.
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("MIS NOT FOUND!");
-            alert.setHeaderText(null);
-            alert.setContentText("Student with Mis " + entered_mis_ForEditStudent + " not found!");
-
-            alert.showAndWait();
-        }
+//        WRITE EQUIVALENT CODE FOR DATABASE
 
     }
 
@@ -738,25 +750,30 @@ public class ProfileController extends HelloController {
             }
         }
 
-        try {
-            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+//        try {
+//            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
+//
+//            System.out.println("Student Details Edited Successfully");
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Student Details Edited Successfully");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Student Details For Mis " + entered_mis_ForEditStudent + " Updated Successfully");
+//
+//            alert.showAndWait();
+//            return;
+//        } catch (IOException e) {
+//            System.out.println("Cannot update CSV FILE");
+//        } finally {
+//            System.out.println("Finally block is run successfully");
+//        }
 
-            System.out.println("Student Details Edited Successfully");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Student Details Edited Successfully");
-            alert.setHeaderText(null);
-            alert.setContentText("Student Details For Mis " + entered_mis_ForEditStudent + " Updated Successfully");
 
-            alert.showAndWait();
-            return;
-        } catch (IOException e) {
-            System.out.println("Cannot update CSV FILE");
-        } finally {
-            System.out.println("Finally block is run successfully");
-        }
+//        WRITE EQUIVALENT CODE FOR DATABASE
+
+
     }
 
-
+//LOGOUT AND BACK BUTTON HANDLE METHODS:-
     @FXML
     public void userProfileLogoutButtonHandle(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
