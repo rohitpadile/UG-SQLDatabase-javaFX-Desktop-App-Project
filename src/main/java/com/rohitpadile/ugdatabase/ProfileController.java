@@ -114,17 +114,10 @@ public class ProfileController extends HelloController {
     private Button userProfileBackButton = new Button();
 
     protected static final Map<String, Student> dataMap = new HashMap<>();
-//    @FXML
-//    public static TextField currentProfileTextField = new TextField(); //used in static initializer block
-
-
     static  {
         // Load the Data as soon as the ProfileController is opened
         // Load the data from the csv file into the hashmap 'dataMap'
         System.out.println("current profile is " + currentLoggedInProfileName);
-//        currentProfileTextField.setEditable(false);
-//        currentProfileTextField.setText(currentLoggedInProfileName);
-
 
         try {
             loadCSVData("./ugstudentdata.csv");
@@ -241,10 +234,7 @@ public class ProfileController extends HelloController {
         try {
             String pattern1 = "^6122\\d{5}$";
             String pattern2 = "^6423\\d{5}$";
-//            if(Integer.parseInt(findStudentMisField.getText().trim())); //Checking if the entered mis is Integer
-//            int checkMis;
 
-//            String checkMis_ = String.valueOf(checkMis);
             String checkMis_ = findStudentMisField.getText().trim();
             if(checkMis_.length() == 9 && (checkMis_.matches(pattern1) || checkMis_.matches(pattern2))) {
                 System.out.println("Find Student Method: Enter MIS is valid and of the form 612211066 or 642311066");
@@ -266,15 +256,6 @@ public class ProfileController extends HelloController {
         entered_mis_ForFindStudent = findStudentMisField.getText().trim();
 
         if (dataMap.containsKey(entered_mis_ForFindStudent)) {
-//                root = FXMLLoader.load(getClass().getResource("displayStudentDetails-page.fxml"));
-//                stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-//                scene = new Scene(root);
-//                stage.setScene(scene);
-//                stage.show();
-//            System.out.println("MIS is present in the dataMap");
-//
-//            System.out.println(entered_mis);
-//            System.out.println(dataMap);
 
             try {
                 displayStudentDetailsTextArea.setText("" +
@@ -341,10 +322,7 @@ public class ProfileController extends HelloController {
         try {
             String pattern1 = "^6122\\d{5}$";
             String pattern2 = "^6423\\d{5}$";
-//            if(Integer.parseInt(findStudentMisField.getText().trim())); //Checking if the entered mis is Integer
-//            int checkMis;
 
-//            String checkMis_ = String.valueOf(checkMis);
             String checkMis_ = addStudentMisField.getText().trim();
             if(checkMis_.length() == 9 && (checkMis_.matches(pattern1) || checkMis_.matches(pattern2))) {
                 System.out.println("Add Student Method: Enter MIS is valid and of the form 612211066 or 642311066");
@@ -376,16 +354,11 @@ public class ProfileController extends HelloController {
             //Redirect the page to a new Page to get the Validated Data Input
             System.out.println("Mis entered for adding is: " +  entered_mis_ForAddStudent);
             root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
-//            root = FXMLLoader.load(getClass().getResource("addStudent-page.fxml"));
-//            root = FXMLLoader.load(getClass().getResource("findStudent-page.fxml"));
             stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
 
-            //Hovering off to AddStudentInputDetailsController
-
-//            AddStudentInputDetailsController addStudentInputDetailsController = new AddStudentInputDetailsController(entered_mis_ForAddStudent);
         }
 
     }
@@ -422,7 +395,6 @@ public class ProfileController extends HelloController {
             }
 
         }catch (IOException e) {
-//            System.out.println();
             System.out.println("Invalid Year of Admission");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("INVALID YEAR OF ADMISSION");
@@ -552,10 +524,7 @@ public class ProfileController extends HelloController {
         try {
             String pattern1 = "^6122\\d{5}$";
             String pattern2 = "^6423\\d{5}$";
-//            if(Integer.parseInt(findStudentMisField.getText().trim())); //Checking if the entered mis is Integer
-//            int checkMis;
 
-//            String checkMis_ = String.valueOf(checkMis);
             String checkMis_ = editStudentMisField.getText().trim();
             if(checkMis_.length() == 9 && (checkMis_.matches(pattern1) || checkMis_.matches(pattern2))) {
                 System.out.println("Add Student Method: Enter MIS is valid and of the form 612211066 or 642311066");
@@ -697,7 +666,6 @@ public class ProfileController extends HelloController {
                 }
 
             }catch (IOException e) {
-//            System.out.println();
                 System.out.println("Invalid Year of Admission");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("INVALID YEAR OF ADMISSION");

@@ -26,7 +26,7 @@ public class HelloApplication extends Application {
         if(!SqliteDatabaseSingletonClass.getInstance().openConnection()){
             System.out.println("Failed to connect to database");
         } else {
-            System.out.println("Database:" + SqliteDatabaseSingletonClass.DB_NAME + "connected succesfully");
+            System.out.println("Connection to database: " + SqliteDatabaseSingletonClass.DB_NAME + " opened sucessfully");
         }
     }
 
