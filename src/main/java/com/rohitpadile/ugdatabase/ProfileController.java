@@ -235,18 +235,14 @@ public class ProfileController extends HelloController {
         //We usually deal with button in Alert dialog. Trend hai bhai!
 
         if(result.isPresent() && result.get() == confirmButton) {
-//            System.out.println("Deleting Student....");
-//            dataMap.remove(entered_mis_ForFindStudent); //Removed Student from dataMap
-//            try {
-//                loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
-//            } catch (IOException e) {
-//                System.out.println("Cannot update CSV FILE");
-//            } finally {
-//                System.out.println("Finally block is run successfully");
-//            }
-
+            System.out.println("Deleting Student from DATABASE...");
+            //write query for deleting student of given mis from database
+            Boolean test = SqliteDatabase.getInstance().deleteStudentWithMis(entered_mis_ForFindStudent);
+            if(test != null && test== true){
+                //work in progress
+            }
 //            WRITE EQUIVALENT CODE FOR DATABASE
-        } else  {
+        } else {
             System.out.println("Canceling Deletion");
         }
 

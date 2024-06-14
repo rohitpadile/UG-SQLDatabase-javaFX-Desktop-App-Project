@@ -22,6 +22,8 @@ public class SqliteDatabase {
     //Prepared Statements:
     private static PreparedStatement createTableIfNotExist;
     private static PreparedStatement selectStudentWithMis;
+    private static PreparedStatement deleteStudentWithMis;
+
     public boolean openConnection(){
         //open the sqlite connection
         try{
@@ -52,7 +54,8 @@ public class SqliteDatabase {
     }
 
     public static Student selectStudentWithMis(String mis) {
-        try (PreparedStatement selectStudentWithMis = conn.prepareStatement(PreparedStatements.SELECT_STUDENT_WITH_MIS_ID)) {
+        try {
+            selectStudentWithMis = conn.prepareStatement(PreparedStatements.SELECT_STUDENT_WITH_MIS_ID);
             selectStudentWithMis.setInt(1, Integer.parseInt(mis));
             ResultSet rs = selectStudentWithMis.executeQuery();
             if(rs.next()){
@@ -71,6 +74,19 @@ public class SqliteDatabase {
             }
         } catch (SQLException e) {
             System.out.println("selectStudentWithMis statement error : " + e.getMessage());
+        }
+        //student not found
+        return null;
+    }
+
+    public static Boolean deleteStudentWithMis(String mis) {
+        try {
+            deleteStudentWithMis = conn.prepareStatement(PreparedStatements.DELETE_STUDENT_WITH_MIS_ID);
+            deleteStudentWithMis.setInt(1, Integer.parseInt(mis));
+            return deleteStudentWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("deleteStudentWithMis statement error : " + e.getMessage());
         }
         //student not found
         return null;

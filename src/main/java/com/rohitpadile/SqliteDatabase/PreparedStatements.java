@@ -14,5 +14,6 @@ public class PreparedStatements {
                                                             ");";
 
     public static final String SELECT_STUDENT_WITH_MIS_ID =  "SELECT * FROM ug_students WHERE mis_id = ?";
+    public static final String DELETE_STUDENT_WITH_MIS_ID =  "DELETE FROM ug_students WHERE mis_id = ?";
 //    public static final String
     }
