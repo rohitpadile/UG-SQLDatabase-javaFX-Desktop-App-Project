@@ -1,13 +1,12 @@
 package com.rohitpadile.ugdatabase;
 
-import com.rohitpadile.SqliteDatabase.SqliteDatabaseSingletonClass;
+import com.rohitpadile.SqliteDatabase.SqliteDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class HelloApplication extends Application {
     @Override
@@ -23,19 +22,19 @@ public class HelloApplication extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-        if(!SqliteDatabaseSingletonClass.getInstance().openConnection()){
+        if(!SqliteDatabase.getInstance().openConnection()){
             System.out.println("Failed to connect to database");
         } else {
-            System.out.println("Connection to database: " + SqliteDatabaseSingletonClass.DB_NAME + " opened sucessfully");
+            System.out.println("Connection to database: " + SqliteDatabase.DB_NAME + " opened sucessfully");
         }
     }
 
     @Override
     public void stop() throws Exception {
         super.stop();
-        if(SqliteDatabaseSingletonClass.getInstance() != null){
-            SqliteDatabaseSingletonClass.getInstance().closeConnection();
-            System.out.println("Connection to database: " + SqliteDatabaseSingletonClass.DB_NAME + " closed sucessfully");
+        if(SqliteDatabase.getInstance() != null){
+            SqliteDatabase.getInstance().closeConnection();
+            System.out.println("Connection to database: " + SqliteDatabase.DB_NAME + " closed sucessfully");
         }
     }
 

@@ -4,19 +4,19 @@ public class Student {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String mis;
-    private String yearOfAdmission;
+    private int mis;
+    private int yearOfAdmission;
     private String email;
-    private String mobileNumber;
+    private int mobileNumber;
     private String homeAddress;
     private String regularMisPattern = "^6122\\d{5}$";
     private String dsyMisPattern = "^6423\\d{5}$";
     private String type;
 
-    public Student(String mis, String first, String middle, String last, String yoa, String email, String mobileNumber, String homeAddress) {
+    public Student(int mis, String first, String middle, String last, int yoa, String email, int mobileNumber, String homeAddress) {
         this.mis = mis;
-        if(mis.matches(regularMisPattern)) type = "regular";
-        else if(mis.matches(dsyMisPattern)) type = "dsy";
+        if(String.valueOf(mis).matches(regularMisPattern)) type = "regular";
+        else if(String.valueOf(mis).matches(dsyMisPattern)) type = "dsy";
         this.firstName = first;
         this.middleName = middle;
         this.lastName = last;
@@ -39,11 +39,11 @@ public class Student {
         return lastName;
     }
 
-    public String getMis() {
+    public int getMis() {
         return mis;
     }
 
-    public String getYearOfAdmission() {
+    public int getYearOfAdmission() {
         return yearOfAdmission;
     }
 
@@ -51,7 +51,7 @@ public class Student {
         return email;
     }
 
-    public String getMobileNumber() {
+    public int getMobileNumber() {
         return mobileNumber;
     }
 
@@ -71,11 +71,11 @@ public class Student {
         lastName = newLastName;
     }
 
-    public void setMis(String newMis) {
+    public void setMis(int newMis) {
         mis = newMis;
     }
 
-    public void setYearOfAdmission(String newYearOfAdmission) {
+    public void setYearOfAdmission(int newYearOfAdmission) {
         yearOfAdmission = newYearOfAdmission;
     }
 
@@ -83,7 +83,7 @@ public class Student {
         email = newEmail;
     }
 
-    public void setMobileNumber(String newMobileNumber) {
+    public void setMobileNumber(int newMobileNumber) {
         mobileNumber = newMobileNumber;
     }
 

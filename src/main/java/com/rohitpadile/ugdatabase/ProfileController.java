@@ -10,10 +10,12 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.rohitpadile.SqliteDatabase.SqliteDatabase;
 
 public class ProfileController extends HelloController {
 
@@ -114,76 +116,14 @@ public class ProfileController extends HelloController {
     private Button userProfileBackButton = new Button();
 
     protected static final Map<String, Student> dataMap = new HashMap<>(); //Comment this later out
-//    static  {
-//        // Load the Data as soon as the ProfileController is opened
-//        // Load the data from the csv file into the hashmap 'dataMap'
-//        System.out.println("current profile is " + currentLoggedInProfileName);
-//
-//        try {
-//            loadCSVData("./ugstudentdata.csv");
-//        } catch (IOException e) {
-//            System.out.println("Problem in static initializer block of ProfileController (filename)");
-//            throw new RuntimeException(e);
-//        } finally {
-//            System.out.println("Finally block is Run successfully");
-//        }
-//    }
 
-    public ProfileController() {
-        System.out.println("ProfileController constructor is called");
+    //static initializer block
+    static {
+        System.out.println("Current profile is " + currentLoggedInProfileName);
     }
-
-//    public static void loadCSVData(String filename) throws IOException {
-//        File file = new File(filename);
-//        if (!file.exists()) {
-//            file.createNewFile();
-//        }
-//
-//        BufferedReader reader = new BufferedReader(new FileReader(filename));
-//        String line;
-//        while ((line = reader.readLine()) != null) {
-//            String[] fields = line.split(",");
-//
-//            Student student = new Student(
-//                    fields[0], // MIS
-//                    fields[1], // First Name
-//                    fields[2], // Middle Name
-//                    fields[3], // Last Name
-//                    fields[4], // Year of Admission
-//                    fields[5], // Email
-//                    fields[6], // Mobile Number
-//                    fields[7]  // Home Address
-//            );
-//
-//            dataMap.put(fields[0], student);
-//        }
-//
-//        System.out.println("loadCSVData is successful. dataMap is updated successfully");
-//        System.out.println(dataMap);
-//    }
-//
-//    public static void loadMapData(String filename, Map<String,Student> dataMap) throws IOException {
-//        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-//
-//        for(Map.Entry<String, Student> entry : dataMap.entrySet()) {
-//
-//            Student student = entry.getValue();
-//            String line = student.getMis() + "," +
-//                    student.getFirstName() + "," +
-//                    student.getMiddleName() + "," +
-//                    student.getLastName() + "," +
-//                    student.getYearOfAdmission() + "," +
-//                    student.getEmail() + "," +
-//                    student.getMobileNumber() + "," +
-//                    student.getHomeAddress();
-//
-//            writer.write(line);
-//            writer.newLine();
-//        }
-//        writer.close();
-//        System.out.println("CSV file updated Successfully");
-//
-//    }
+    public ProfileController() {
+        System.out.println("ProfileController constructor is called for instance : " + this);
+    }
 
     @FXML
     public void addStudent(ActionEvent event) throws IOException{
@@ -254,24 +194,18 @@ public class ProfileController extends HelloController {
 
         //entered_mis_ForFindStudent from admin
         entered_mis_ForFindStudent = findStudentMisField.getText().trim();
+        Student foundStudent;
+        if((foundStudent = SqliteDatabase.getInstance().selectStudentWithMis(entered_mis_ForFindStudent)) != null){
 
-        if (dataMap.containsKey(entered_mis_ForFindStudent)) {
-//
-//            try {
-//                displayStudentDetailsTextArea.setText("" +
-//                        "MIS: \t\t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMis() + "\n" +
-//                        "NAME: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getFirstName() + " " +
-//                        dataMap.get(entered_mis_ForFindStudent).getMiddleName() + " " +
-//                        dataMap.get(entered_mis_ForFindStudent).getLastName() + "\n" +
-//                        "YEAR OF ADMISSION: \t" + dataMap.get(entered_mis_ForFindStudent).getYearOfAdmission() + "\n" +
-//                        "EMAIL: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getEmail() + "\n" +
-//                        "PHONE: \t\t\t\t" + dataMap.get(entered_mis_ForFindStudent).getMobileNumber() + "\n" +
-//                        "ADDRESS: \t\t\t" + dataMap.get(entered_mis_ForFindStudent).getHomeAddress() + "\n");
-//            } catch (NullPointerException e) {
-//                System.out.println("Null pointer exception");
-//            }
-
-//WRITE THE ABOVE EQUIVALENT CODE FOR DATABASE
+            displayStudentDetailsTextArea.setText("" +
+                "MIS: \t\t\t\t\t" + foundStudent.getMis() + "\n" +
+                "NAME: \t\t\t\t" + foundStudent.getFirstName() + " " +
+                foundStudent.getMiddleName() + " " +
+                foundStudent.getLastName() + "\n" +
+                "YEAR OF ADMISSION: \t" + foundStudent.getYearOfAdmission() + "\n" +
+                "EMAIL: \t\t\t\t" + foundStudent.getEmail() + "\n" +
+                "PHONE: \t\t\t\t" + foundStudent.getMobileNumber() + "\n" +
+                "ADDRESS: \t\t\t" + foundStudent.getHomeAddress() + "\n");
 
         } else {
             //open a Alert dialog which says student not found.
@@ -482,13 +416,13 @@ public class ProfileController extends HelloController {
 
             // Proceed with creating the student object and adding it to the map
             Student student = new Student(
-                    this.entered_mis_ForAddStudent,
+                    Integer.parseInt(entered_mis_ForAddStudent),
                     firstName,
                     middleName,
                     lastName,
-                    yearOfAdmission,
+                    Integer.parseInt(yearOfAdmission),
                     emailAddress,
-                    mobileNumber,
+                    Integer.parseInt(mobileNumber),
                     homeAddress);
             System.out.println("New student to Add is successfully created");
             dataMap.put(entered_mis_ForAddStudent, student);
@@ -672,7 +606,7 @@ public class ProfileController extends HelloController {
             try {
                 if (editStudentYOAField.getText().trim().length() == 4 && editStudentYOAField.getText().trim().matches("[0-9]+")) {
                     System.out.println("The year of admission is valid.");
-                    student.setYearOfAdmission(yearOfAdmission);
+                    student.setYearOfAdmission(Integer.parseInt(yearOfAdmission));
                 } else {
                     throw new IOException();
                 }
@@ -713,7 +647,7 @@ public class ProfileController extends HelloController {
                 if (editStudentMobileNumberField.getText().trim().length() == 10 &&
                         editStudentMobileNumberField.getText().trim().matches("[0-9]+")) {
                     System.out.println("The mobile number is valid.");
-                    student.setMobileNumber(mobileNumber);
+                    student.setMobileNumber(Integer.parseInt(mobileNumber));
                 } else {
                     throw new IOException();
                 }
