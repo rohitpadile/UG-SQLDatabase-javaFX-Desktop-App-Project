@@ -235,13 +235,15 @@ public class ProfileController extends HelloController {
         //We usually deal with button in Alert dialog. Trend hai bhai!
 
         if(result.isPresent() && result.get() == confirmButton) {
-            System.out.println("Deleting Student from DATABASE...");
+
             //write query for deleting student of given mis from database
             Boolean test = SqliteDatabase.getInstance().deleteStudentWithMis(entered_mis_ForFindStudent);
             if(test != null && test== true){
-                //work in progress
+                //Deleting student from database
+                System.out.println("Deleting Student from DATABASE: test = "  + test);
+            } else if(test != null && test== false){
+                System.out.println("Deleting Student from DATABASE: test = "  + test);
             }
-//            WRITE EQUIVALENT CODE FOR DATABASE
         } else {
             System.out.println("Canceling Deletion");
         }
