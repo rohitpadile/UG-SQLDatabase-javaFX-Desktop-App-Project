@@ -465,47 +465,42 @@ public class ProfileController extends HelloController {
 
         //entered_mis_ForFindStudent from admin
         this.entered_mis_ForEditStudent = editStudentMisField.getText().trim();
+        Student tempStudent;
+        if ((tempStudent = SqliteDatabase.getInstance().selectStudentWithMis(entered_mis_ForEditStudent)) != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("EDIT STUDENT DATA?");
+            alert.setHeaderText(null);
+            alert.setContentText("Do you want edit Student details with Mis: " + entered_mis_ForEditStudent);
 
-//        if (dataMap.containsKey(entered_mis_ForEditStudent)) {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.setTitle("EDIT STUDENT DATA?");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Do you want edit Student details with Mis: " + entered_mis_ForEditStudent);
-//
-//            ButtonType confirmButton = new ButtonType("Confirm");
-//            ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
-//            alert.getButtonTypes().setAll(confirmButton, cancelButton);
-//
-//            Optional<ButtonType> result = alert.showAndWait();
+            ButtonType confirmButton = new ButtonType("Confirm");
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
+            alert.getButtonTypes().setAll(confirmButton, cancelButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
 //            //We usually deal with button in Alert dialog. Trend hai bhai!
 //
-//            if(result.isPresent() && result.get() == confirmButton) {
-//                System.out.println("Editing Student process....");
-//                //Redirect to editStudentInputDetails-page.fxml
-//
-//                root = FXMLLoader.load(getClass().getResource("editStudentInputDetails-page.fxml"));
-//                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//                scene = new Scene(root);
-//                stage.setScene(scene);
-//                stage.show();
-//            } else  {
-//                System.out.println("Canceling Editing of Student with Mis: " + entered_mis_ForEditStudent);
-//                return;
-//            }
-//        } else {
-//            //open a Alert dialog which says student not found.
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("MIS NOT FOUND!");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Student with Mis " + entered_mis_ForEditStudent + " not found!");
-//
-//            alert.showAndWait();
-//        }
+            if(result.isPresent() && result.get() == confirmButton) {
+                System.out.println("Editing Student process....");
+                //Redirect to editStudentInputDetails-page.fxml
 
+                root = FXMLLoader.load(getClass().getResource("editStudentInputDetails-page.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } else  {
+                System.out.println("Canceling Editing of Student with Mis: " + entered_mis_ForEditStudent);
+                return;
+            }
+        } else {
+            //open a Alert dialog which says student not found.
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("MIS NOT FOUND!");
+            alert.setHeaderText(null);
+            alert.setContentText("Student with Mis " + entered_mis_ForEditStudent + " not found!");
 
-
-//        WRITE EQUIVALENT CODE FOR DATABASE
-
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -524,7 +519,9 @@ public class ProfileController extends HelloController {
             try {
                 if (editStudentFirstNameField.getText().trim().matches("[a-zA-Z]+")) {
                     System.out.println("First Name is valid");
-                    student.setFirstName(firstName);
+//                    student.setFirstName(firstName);
+                    SqliteDatabase.getInstance().editStudentFirstnameWithMis(entered_mis_ForEditStudent, firstName);
+                    System.out.println("Updating firstName for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -544,7 +541,9 @@ public class ProfileController extends HelloController {
             try {
                 if (editStudentMiddleNameField.getText().trim().matches("[a-zA-Z]+")) {
                     System.out.println("Middle Name is valid");
-                    student.setMiddleName(firstName);
+//                    student.setMiddleName(firstName);
+                    SqliteDatabase.getInstance().editStudentMiddlenameWithMis(entered_mis_ForEditStudent, middleName);
+                    System.out.println("Updating middleName for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -565,7 +564,9 @@ public class ProfileController extends HelloController {
             try {
                 if (editStudentLastNameField.getText().trim().matches("[a-zA-Z]+")) {
                     System.out.println("Last Name is valid");
-                    student.setLastName(firstName);
+//                    student.setLastName(firstName);
+                    SqliteDatabase.getInstance().editStudentLastnameWithMis(entered_mis_ForEditStudent, lastName);
+                    System.out.println("Updating lastName for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -585,7 +586,9 @@ public class ProfileController extends HelloController {
             try {
                 if (editStudentYOAField.getText().trim().length() == 4 && editStudentYOAField.getText().trim().matches("[0-9]+")) {
                     System.out.println("The year of admission is valid.");
-                    student.setYearOfAdmission(Integer.parseInt(yearOfAdmission));
+//                    student.setYearOfAdmission(Integer.parseInt(yearOfAdmission));
+                    SqliteDatabase.getInstance().editStudentYOAWithMis(entered_mis_ForEditStudent, Integer.parseInt(yearOfAdmission));
+                    System.out.println("Updating yearOfAdmission for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -606,7 +609,9 @@ public class ProfileController extends HelloController {
                 String emailPattern = "[a-zA-Z0-9._%+-]+@coeptech\\.ac\\.in";
                 if (editStudentEmailAddressField.getText().trim().matches(emailPattern)) {
                     System.out.println("The email address is valid.");
-                    student.setEmail(emailAddress);
+//                    student.setEmail(emailAddress);
+                    SqliteDatabase.getInstance().editStudentEmailWithMis(entered_mis_ForEditStudent, emailAddress);
+                    System.out.println("Updating emailAddress for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -626,7 +631,9 @@ public class ProfileController extends HelloController {
                 if (editStudentMobileNumberField.getText().trim().length() == 10 &&
                         editStudentMobileNumberField.getText().trim().matches("[0-9]+")) {
                     System.out.println("The mobile number is valid.");
-                    student.setMobileNumber(mobileNumber);
+//                    student.setMobileNumber(mobileNumber);
+                    SqliteDatabase.getInstance().editStudentMobilenumberWithMis(entered_mis_ForEditStudent, mobileNumber);
+                    System.out.println("Updating mobileNumber for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -646,7 +653,9 @@ public class ProfileController extends HelloController {
             try {
                 if (editStudentHomeAddressField.getText().trim().length() >= 5) {
                     System.out.println("Valid address");
-                    student.setHomeAddress(homeAddress);
+//                    student.setHomeAddress(homeAddress);
+                    SqliteDatabase.getInstance().editStudentHomeaddressWithMis(entered_mis_ForEditStudent, homeAddress);
+                    System.out.println("Updating homeAddress for mis " + entered_mis_ForEditStudent + " SUCCESSFUL!");
                 } else {
                     throw new IOException();
                 }
@@ -663,27 +672,13 @@ public class ProfileController extends HelloController {
             }
         }
 
-//        try {
-//            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
-//
-//            System.out.println("Student Details Edited Successfully");
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Student Details Edited Successfully");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Student Details For Mis " + entered_mis_ForEditStudent + " Updated Successfully");
-//
-//            alert.showAndWait();
-//            return;
-//        } catch (IOException e) {
-//            System.out.println("Cannot update CSV FILE");
-//        } finally {
-//            System.out.println("Finally block is run successfully");
-//        }
+            System.out.println("Student Details Edited Successfully");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Student Details Edited Successfully");
+            alert.setHeaderText(null);
+            alert.setContentText("Student Details For Mis " + entered_mis_ForEditStudent + " Updated Successfully");
 
-
-//        WRITE EQUIVALENT CODE FOR DATABASE
-
-
+            alert.showAndWait();
     }
 
 //LOGOUT AND BACK BUTTON HANDLE METHODS:-

@@ -20,10 +20,17 @@ public class SqliteDatabase {
         return instance;
     }
     //Prepared Statements:
-    private static PreparedStatement createTableIfNotExist;
+//    private static PreparedStatement createTableIfNotExist;
     private static PreparedStatement selectStudentWithMis;
     private static PreparedStatement deleteStudentWithMis;
     private static PreparedStatement addStudentWithDetails;
+    private static PreparedStatement editStudentFirstnameWithMis;
+    private static PreparedStatement editStudentMiddlenameWithMis;
+    private static PreparedStatement editStudentLastnameWithMis;
+    private static PreparedStatement editStudentYOAWithMis;
+    private static PreparedStatement editStudentEmailWithMis;
+    private static PreparedStatement editStudentMobilenumberWithMis;
+    private static PreparedStatement editStudentHomeaddressWithMis;
 
     public boolean openConnection(){
         //open the sqlite connection
@@ -108,6 +115,91 @@ public class SqliteDatabase {
             return true;
         } catch (SQLException e) {
             System.out.println("addStudentWithDetails() statement error : " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean editStudentFirstnameWithMis(String mis, String firstName) {
+        try {
+            editStudentFirstnameWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_FIRSTNAME_WITH_MIS_ID);
+            editStudentFirstnameWithMis.setString(1, firstName);
+            editStudentFirstnameWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentFirstnameWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentFirstnameWithMis() statement error: " + e.getMessage());
+            return false;
+        }
+    }
+    public static boolean editStudentMiddlenameWithMis(String mis, String middleName) {
+        try {
+            editStudentMiddlenameWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_MIDDLENAME_WITH_MIS_ID);
+            editStudentMiddlenameWithMis.setString(1, middleName);
+            editStudentMiddlenameWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentMiddlenameWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentMiddlenameWithMis() statement error: " + e.getMessage());
+            return false;
+        }
+    }
+    public static boolean editStudentLastnameWithMis(String mis, String lastName) {
+        try {
+            editStudentLastnameWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_LASTNAME_WITH_MIS_ID);
+            editStudentLastnameWithMis.setString(1, lastName);
+            editStudentLastnameWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentLastnameWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentLastnameWithMis() statement error: " + e.getMessage());
+            return false;
+        }
+    }
+    public static boolean editStudentYOAWithMis(String mis, int yoa) {
+        try {
+            editStudentYOAWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_YOA_WITH_MIS_ID);
+            editStudentYOAWithMis.setInt(1, yoa);
+            editStudentYOAWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentYOAWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentYOAWithMis() statement error: " + e.getMessage());
+            return false;
+        }
+    }
+    public static boolean editStudentEmailWithMis(String mis, String email) {
+        try {
+            editStudentEmailWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_EMAIL_WITH_MIS_ID);
+            editStudentEmailWithMis.setString(1, email);
+            editStudentEmailWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentEmailWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentEmailWithMis() statement error: " + e.getMessage());
+            return false;
+        }
+    }
+    public static boolean editStudentMobilenumberWithMis(String mis, String mobileNumber) {
+        try {
+            editStudentMobilenumberWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_MOBILENUMBER_WITH_MIS_ID);
+            editStudentMobilenumberWithMis.setString(1, mobileNumber);
+            editStudentMobilenumberWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentMobilenumberWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentMobilenumberWithMis() statement error: " + e.getMessage());
+            return false;
+        }
+    }
+    public static boolean editStudentHomeaddressWithMis(String mis, String homeAddress) {
+        try {
+            editStudentHomeaddressWithMis = conn.prepareStatement(PreparedStatements.EDIT_STUDENT_COLUMN_HOMEADDRESS_WITH_MIS_ID);
+            editStudentHomeaddressWithMis.setString(1, homeAddress);
+            editStudentHomeaddressWithMis.setInt(2, Integer.parseInt(mis));
+            return editStudentHomeaddressWithMis.execute();
+
+        } catch (SQLException e) {
+            System.out.println("editStudentHomeaddressWithMis() statement error: " + e.getMessage());
             return false;
         }
     }
