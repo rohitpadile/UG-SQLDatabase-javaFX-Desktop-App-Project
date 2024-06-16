@@ -7,7 +7,7 @@ import java.sql.*;
 public class SqliteDatabase {
     private static Connection conn;
     public static final String DB_NAME = "ug-database.db";
-    public static final String CONNECTION_STRING = "jdbc:sqlite:D:/java/databases/ug database/" + DB_NAME;
+    public static final String CONNECTION_STRING = "jdbc:sqlite:C:/Users/Rohit Padile/Desktop/" + DB_NAME;
     private static SqliteDatabase instance = new SqliteDatabase();
     private SqliteDatabase(){
         //private constructor

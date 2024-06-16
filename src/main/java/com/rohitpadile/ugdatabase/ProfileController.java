@@ -243,11 +243,13 @@ public class ProfileController extends HelloController {
                 System.out.println("Deleting Student from DATABASE: test = "  + test);
             } else if(test != null && test== false){
                 System.out.println("Deleting Student from DATABASE: test = "  + test);
+            } else if(test == null){
+                System.out.println("Deleting Student from DATABASE: test = "  + test);
             }
         } else {
             System.out.println("Canceling Deletion");
         }
-
+//
     }
 
     @FXML
