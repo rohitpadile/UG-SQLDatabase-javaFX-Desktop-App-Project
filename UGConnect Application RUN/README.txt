@@ -3,3 +3,5 @@
 
 admin password: admin123
 user password: user123
+
+Your data is contained in the SQLite database
