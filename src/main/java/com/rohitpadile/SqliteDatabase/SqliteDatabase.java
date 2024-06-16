@@ -2,6 +2,7 @@ package com.rohitpadile.SqliteDatabase;
 
 import com.rohitpadile.ugdatabase.Student;
 
+import java.io.File;
 import java.sql.*;
 //prompts link - https://chatgpt.com/c/9fb66c5e-0114-4f11-9a2b-163cd249a09e
 public class SqliteDatabase {
@@ -36,6 +37,7 @@ public class SqliteDatabase {
         //open the sqlite connection
         try{
             conn = DriverManager.getConnection(CONNECTION_STRING);
+            createDatabaseFileIfNotExists();
             createTableIfNotExists();
             selectStudentWithMis = conn.prepareStatement(PreparedStatements.SELECT_STUDENT_WITH_MIS_ID);
             return true;
@@ -45,6 +47,7 @@ public class SqliteDatabase {
         }
     }
 
+
     public boolean closeConnection() throws SQLException {
         if(conn != null) {
             conn.close();
@@ -52,8 +55,10 @@ public class SqliteDatabase {
         }
         return false;
     }
-
-    public static void createTableIfNotExists() {
+    private static void createDatabaseFileIfNotExists() {
+        File file = new File("./ug-students.db");
+    }
+    private static void createTableIfNotExists() {
         try (PreparedStatement createTable = conn.prepareStatement(PreparedStatements.CREATE_TABLE_IF_NOT_EXIST)) {
             createTable.executeUpdate();
         } catch (SQLException e) {
