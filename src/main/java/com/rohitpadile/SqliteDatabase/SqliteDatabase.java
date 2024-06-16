@@ -8,7 +8,7 @@ import java.sql.*;
 public class SqliteDatabase {
     private static Connection conn;
     public static final String DB_NAME = "ug-database.db";
-    public static final String CONNECTION_STRING = "jdbc:sqlite:C:/Users/Rohit Padile/Desktop/" + DB_NAME;
+    public static final String CONNECTION_STRING = "jdbc:sqlite:./" + DB_NAME;
     private static SqliteDatabase instance = new SqliteDatabase();
     private SqliteDatabase(){
         //private constructor
@@ -37,7 +37,6 @@ public class SqliteDatabase {
         //open the sqlite connection
         try{
             conn = DriverManager.getConnection(CONNECTION_STRING);
-            createDatabaseFileIfNotExists();
             createTableIfNotExists();
             selectStudentWithMis = conn.prepareStatement(PreparedStatements.SELECT_STUDENT_WITH_MIS_ID);
             return true;
@@ -54,9 +53,6 @@ public class SqliteDatabase {
             return true;
         }
         return false;
-    }
-    private static void createDatabaseFileIfNotExists() {
-        File file = new File("./ug-students.db");
     }
     private static void createTableIfNotExists() {
         try (PreparedStatement createTable = conn.prepareStatement(PreparedStatements.CREATE_TABLE_IF_NOT_EXIST)) {
