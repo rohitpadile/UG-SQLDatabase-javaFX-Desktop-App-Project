@@ -7,13 +7,13 @@ public class Student {
     private int mis;
     private int yearOfAdmission;
     private String email;
-    private int mobileNumber;
+    private String mobileNumber;
     private String homeAddress;
     private String regularMisPattern = "^6122\\d{5}$";
     private String dsyMisPattern = "^6423\\d{5}$";
     private String type;
 
-    public Student(int mis, String first, String middle, String last, int yoa, String email, int mobileNumber, String homeAddress) {
+    public Student(int mis, String first, String middle, String last, int yoa, String email, String mobileNumber, String homeAddress) {
         this.mis = mis;
         if(String.valueOf(mis).matches(regularMisPattern)) type = "regular";
         else if(String.valueOf(mis).matches(dsyMisPattern)) type = "dsy";
@@ -51,7 +51,7 @@ public class Student {
         return email;
     }
 
-    public int getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 
@@ -83,7 +83,7 @@ public class Student {
         email = newEmail;
     }
 
-    public void setMobileNumber(int newMobileNumber) {
+    public void setMobileNumber(String newMobileNumber) {
         mobileNumber = newMobileNumber;
     }
 

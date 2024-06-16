@@ -23,6 +23,7 @@ public class SqliteDatabase {
     private static PreparedStatement createTableIfNotExist;
     private static PreparedStatement selectStudentWithMis;
     private static PreparedStatement deleteStudentWithMis;
+    private static PreparedStatement addStudentWithDetails;
 
     public boolean openConnection(){
         //open the sqlite connection
@@ -65,7 +66,7 @@ public class SqliteDatabase {
                 String lastName = rs.getString(4);
                 int yoa = rs.getInt(5);
                 String email = rs.getString(6);
-                int mobileNumber = rs.getInt(7);
+                String mobileNumber = rs.getString(7);
                 String address = rs.getString(8);
                 Student student = new Student(Integer.parseInt(mis), firstName, middleName, lastName, yoa , email, mobileNumber,address);
 
@@ -90,5 +91,24 @@ public class SqliteDatabase {
         }
         //student not found
         return null;
+    }
+
+    public static boolean addStudentWithDetails(String mis, String fn, String mn, String ln, int yoa, String email, String mob, String ha) {
+        try {
+            addStudentWithDetails = conn.prepareStatement(PreparedStatements.ADD_STUDENT_WITH_ALL_DETAILS);
+            addStudentWithDetails.setInt(1, Integer.parseInt(mis));
+            addStudentWithDetails.setString(2,fn );
+            addStudentWithDetails.setString(3,mn );
+            addStudentWithDetails.setString(4,ln );
+            addStudentWithDetails.setInt(5, yoa);
+            addStudentWithDetails.setString(6, email);
+            addStudentWithDetails.setString(7, mob );
+            addStudentWithDetails.setString(8,  ha);
+            addStudentWithDetails.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("addStudentWithDetails() statement error : " + e.getMessage());
+            return false;
+        }
     }
 }

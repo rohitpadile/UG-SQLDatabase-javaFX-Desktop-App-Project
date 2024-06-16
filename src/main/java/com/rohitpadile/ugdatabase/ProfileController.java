@@ -278,29 +278,24 @@ public class ProfileController extends HelloController {
 
         //entered_mis_ForFindStudent from admin
         this.entered_mis_ForAddStudent = addStudentMisField.getText().trim();
+        Student foundStudent;
+        if((foundStudent = SqliteDatabase.getInstance().selectStudentWithMis(entered_mis_ForAddStudent)) != null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("MIS ALREADY PRESENT");
+            alert.setHeaderText(null);
+            alert.setContentText("Student with MIS: " + entered_mis_ForAddStudent + " already present in the Database!");
 
-//        if (dataMap.containsKey(entered_mis_ForAddStudent)) {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("MIS ALREADY PRESENT");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Student with MIS: " + entered_mis_ForAddStudent + " already present in the Database!");
-//
-//            alert.showAndWait();
-//        } else {
-//            //Redirect the page to a new Page to get the Validated Data Input
-//            System.out.println("Mis entered for adding is: " +  entered_mis_ForAddStudent);
-//            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
-//            stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-//            scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.show();
-//        }
-
-//        WRITE EQUIVALENT CODE FOR DATABASE
-
+            alert.showAndWait();
+        }else {
+            //Redirect the page to a new Page to get the Validated Data Input
+            System.out.println("Mis entered for adding is: " +  entered_mis_ForAddStudent);
+            root = FXMLLoader.load(getClass().getResource("addStudentInputDetails-page.fxml"));
+            stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
-
-
     @FXML
     public void addStudentInputDetailsSaveButtonHandle(ActionEvent event) throws IOException {
         System.out.println("Mis entered for adding is: " +  this.entered_mis_ForAddStudent);
@@ -413,37 +408,26 @@ public class ProfileController extends HelloController {
                     mobileNumber.isEmpty() || homeAddress.isEmpty()) {
                 throw new NullPointerException("One or more fields are empty.");
             }
-
-            // Proceed with creating the student object and adding it to the map
-            Student student = new Student(
-                    Integer.parseInt(entered_mis_ForAddStudent),
+            if(SqliteDatabase.getInstance().addStudentWithDetails(
+                    entered_mis_ForAddStudent,
                     firstName,
                     middleName,
                     lastName,
                     Integer.parseInt(yearOfAdmission),
                     emailAddress,
-                    Integer.parseInt(mobileNumber),
-                    homeAddress);
-            System.out.println("New student to Add is successfully created");
-            dataMap.put(entered_mis_ForAddStudent, student);
-//            System.out.println("New student to Add is successfully put in dataMap");
-//
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Successful");
-//            alert.setHeaderText(null);
-//            alert.setContentText("NEW STUDENT WITH MIS " + entered_mis_ForAddStudent + " ADDED SUCCESSFULLY");
-//
-//            alert.showAndWait();
-//
-//            loadMapData("./ugstudentdata.csv", dataMap); //Updating the csv file with dataMap
-//            System.out.println("Updated the csv file!");
+                    mobileNumber,
+                    homeAddress
+            )){
+                System.out.println("New student is added to SQLITE database successfully");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successful");
+                alert.setHeaderText(null);
+                alert.setContentText("NEW STUDENT WITH MIS " + entered_mis_ForAddStudent + " ADDED SUCCESSFULLY");
 
-
-
-//            WRITE EQUIVALENT CODE FOR DATABASE
-
-
-
+                alert.showAndWait();
+            } else {
+                throw new NullPointerException();
+            }
         } catch (NullPointerException e) {
             System.out.println("New student to Add is unsuccessful: " + e.getMessage());
             // Optionally show an alert or message to the user indicating that one or more fields are empty
@@ -455,11 +439,6 @@ public class ProfileController extends HelloController {
             alert.showAndWait();
         }
     }
-
-
-
-
-
     @FXML
     public void editStudentMisInputHandle(ActionEvent event) throws IOException {
         //Verifying if the MIS is valid
@@ -647,7 +626,7 @@ public class ProfileController extends HelloController {
                 if (editStudentMobileNumberField.getText().trim().length() == 10 &&
                         editStudentMobileNumberField.getText().trim().matches("[0-9]+")) {
                     System.out.println("The mobile number is valid.");
-                    student.setMobileNumber(Integer.parseInt(mobileNumber));
+                    student.setMobileNumber(mobileNumber);
                 } else {
                     throw new IOException();
                 }
